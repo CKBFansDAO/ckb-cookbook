@@ -8,9 +8,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: 'CKB DOCS',
+  tagline: 'CKB Docs',
+  favicon: 'img/favicon.jpeg',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -20,8 +20,8 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'CKBFans', // Usually your GitHub org/user name.
+  projectName: 'ckbdocs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -32,6 +32,16 @@ const config = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh'],
+    localeConfigs: {
+      en: {
+        label: 'English',
+        htmlLang: 'en-US',
+      },
+      zh: {
+        label: '简体中文',
+        htmlLang: 'zh-CN',
+      },
+    },
   },
 
   presets: [
@@ -44,14 +54,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/CKBFansDAO/ckbdocs/tree/master/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/CKBFansDAO/ckbdocs/tree/master/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -66,9 +76,9 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: '',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'CKB Docs Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -84,7 +94,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/CKBFansDAO/ckbdocs',
             label: 'GitHub',
             position: 'right',
           },
@@ -129,12 +139,12 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/CKBFansDAO/ckbdocs',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} CKB Docs, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
