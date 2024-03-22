@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Zen+Dots&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Righteous&display=swap');
 
 .tailwind {
   @tailwind base;
@@ -58,10 +58,19 @@ html, :host {
   font-family: var(--ifm-font-family-base);
 }
 
-pre code {
+pre {
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
 }
 
 .codeBlockLines_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module {
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+}
+
+code {
+  color: #EB5757;
+}
+
+.title {
+  font-family: "Archivo Black", sans-serif, Consolas, Monaco, "Andale Mono";
+  font-weight: 400;
 }

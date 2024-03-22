@@ -8,12 +8,12 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'CKB DOCS',
-  tagline: 'CKB Docs',
+  title: 'CKB Cookbook',
+  tagline: 'How to developing on CKB',
   favicon: 'img/favicon.jpeg',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://cookbook.ckbdapps.com.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -21,7 +21,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'CKBFans', // Usually your GitHub org/user name.
-  projectName: 'ckbdocs', // Usually your repo name.
+  projectName: 'ckb-cookbook', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -54,14 +54,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/CKBFansDAO/ckbdocs/tree/master/',
+            'https://github.com/CKBFansDAO/ckb-cookbook/tree/master/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/CKBFansDAO/ckbdocs/tree/master/',
+            'https://github.com/CKBFansDAO/ckb-cookbook/tree/master/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -78,7 +78,7 @@ const config = {
       navbar: {
         title: '',
         logo: {
-          alt: 'CKB Docs Logo',
+          alt: 'CKB cookbook Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -86,7 +86,7 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Documents',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -94,7 +94,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/CKBFansDAO/ckbdocs',
+            href: 'https://github.com/CKBFansDAO/ckb-cookbook',
             label: 'GitHub',
             position: 'right',
           },
@@ -108,7 +108,7 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Documents',
                 to: '/docs/intro',
               },
             ],
@@ -117,16 +117,16 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Talk',
+                href: 'https://talk.nervos.org',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Dev Discord',
+                href: 'https://discord.com/invite/ZmbbT529fQ',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://twitter.com/web5hive',
               },
             ],
           },
@@ -139,12 +139,12 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/CKBFansDAO/ckbdocs',
+                href: 'https://github.com/CKBFansDAO/ckb-cookbook',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} CKB Docs, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} CKB Cookbook, Inc.`,
       },
       prism: {
         theme: prismThemes.github,
