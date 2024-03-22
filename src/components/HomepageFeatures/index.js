@@ -4,32 +4,29 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'RGB++',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        An extended RGB protocol by using single-use seals and client-side validation techniques to manage state changes and transaction verification. It introduces Turing-complete smart contract scalability and performance to Bitcoin without the need for cross-chain transactions and without compromising security.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Cell Modal',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        CKB inherits the ideas of Bitcoin’s architecture and creates the Cell model from generalizing the UTXO model, retaining the consistency and simplicity of Bitcoin. In Nervos CKB, all the states are stored in Cells, all computation is done off-chain, and all the verification work is handled by nodes.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Spore DOBs',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        An on-chain digital object (DOB) protocol designed to empower ownership, distribution, and value capture. As an on-chain DOB backed by CKB, Spore is engineered to embed value into on-chain contents and NFTs, establishing an intrinsic link between content and value.
       </>
     ),
   },
