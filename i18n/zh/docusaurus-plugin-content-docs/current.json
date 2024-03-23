@@ -32,7 +32,7 @@
     "description": "The generated-index page description for category Tutorial - Basics in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.misc": {
-    "message": "misc",
+    "message": "Misc",
     "description": "The label for category misc in sidebar tutorialSidebar"
   }
 }
