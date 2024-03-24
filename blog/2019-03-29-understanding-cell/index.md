@@ -2,7 +2,7 @@
 slug: understanding-cell-model
 title: 理解 CKB 的 Cell 模型
 authors: [janx]
-tags: [Cell, CKB]
+tags: [Cell-Model, CKB]
 ---
 
 在设计CKB的时候，我们想要解决三个方面的问题：

@@ -2,16 +2,22 @@ janx:
   name: Jan Xie
   title: Nervos Architect, Cryptape Chief
   url: https://twitter.com/busyforking
-  image_url: https://pbs.twimg.com/profile_images/1710551056567205888/DW48eple_400x400.jpg
+  image_url: /assets/avatar/janx.jpg
+
+daniel:
+  name: Daniel Lv
+  title: Co-Founder of Nervos Network
+  url: https://twitter.com/lgn21st
+  image_url: /assets/avatar/daniel.png
 
 cipher:
   name: Cipher
   title: CELL Studio co-Founder, JoyID founder, Nervos Network researcher
   url: https://twitter.com/crypcipher
-  image_url: https://pbs.twimg.com/profile_images/1103618126745387008/me4SX2Tq_400x400.png
+  image_url: /assets/avatar/cipher.jpg
 
 xuejie:
   name:  Xuejie Xiao
   title: Blockchain engineer at Cryptape working on Nervos CKB
   url: https://xuejie.space/
-  image_url: https://pbs.twimg.com/profile_images/1723030978/09c0832b2696d503d52af15d_400x400.jpg
+  image_url: /assets/avatar/xuejie.jpg

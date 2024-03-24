@@ -62,6 +62,8 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/CKBFansDAO/ckb-cookbook/tree/master/',
+          blogSidebarCount: 10,
+          blogSidebarTitle: 'Recommended Reading',
         },
         theme: {
           customCss: './src/css/custom.css',
