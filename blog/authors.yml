@@ -1,17 +1,17 @@
-endi:
-  name: Endilie Yacop Sucipto
-  title: Maintainer of Docusaurus
-  url: https://github.com/endiliey
-  image_url: https://github.com/endiliey.png
+janx:
+  name: Jan Xie
+  title: Nervos Architect, Cryptape Chief
+  url: https://twitter.com/busyforking
+  image_url: https://pbs.twimg.com/profile_images/1710551056567205888/DW48eple_400x400.jpg
 
-yangshun:
-  name: Yangshun Tay
-  title: Front End Engineer @ Facebook
-  url: https://github.com/yangshun
-  image_url: https://github.com/yangshun.png
+cipher:
+  name: Cipher
+  title: CELL Studio co-Founder, JoyID founder, Nervos Network researcher
+  url: https://twitter.com/crypcipher
+  image_url: https://pbs.twimg.com/profile_images/1103618126745387008/me4SX2Tq_400x400.png
 
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
+xuejie:
+  name:  Xuejie Xiao
+  title: Blockchain engineer at Cryptape working on Nervos CKB
+  url: https://xuejie.space/
+  image_url: https://pbs.twimg.com/profile_images/1723030978/09c0832b2696d503d52af15d_400x400.jpg
