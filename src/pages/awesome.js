@@ -5,8 +5,8 @@ import { AwesomeList } from '../data/awesome-list';
 
 function getAllTags(list) {
   const all = Array.from(new Set(list.flatMap(item => item.tag)));
-  const rest = all.filter(t => t !== 'dApp' && t !== 'Script').sort();
-  return ['dApp', 'Script', ...rest];
+  const rest = all.filter(t => t !== 'Recommended for dApp' && t !== 'Recommended for Script').sort();
+  return ['Recommended for dApp', 'Recommended for Script', ...rest];
 }
 
 // Simple color palette for tags
@@ -33,7 +33,31 @@ function isColorDark(hex) {
 }
 
 function TagBadge({ tag, selected, onClick, style, grayInactive }) {
-  const color = tagColor(tag);
+  // Special highlight for the two most important tags
+  const isRecommendedDapp = tag === 'Recommended for dApp';
+  const isRecommendedScript = tag === 'Recommended for Script';
+  let color = tagColor(tag);
+  let badgeStyle = {};
+  let icon = null;
+  if (isRecommendedDapp) {
+    color = '#ff9800'; // orange
+    badgeStyle = {
+      border: '1px solid #ff9800',
+      background: selected ? '#ff9800' : '#fff8e1',
+      color: selected ? '#fff' : '#b26a00',
+      fontWeight: selected ? 700 : 400,
+    };
+    icon = <img src="https://docs.nervos.org/svg/square-dapp.svg" alt="dApp" style={{ width: 16, height: 16, marginRight: 5, verticalAlign: 'middle' }} />;
+  } else if (isRecommendedScript) {
+    color = '#1976d2'; // blue
+    badgeStyle = {
+      border: '1px solid #1976d2',
+      background: selected ? '#1976d2' : '#e3f2fd',
+      color: selected ? '#fff' : '#0d305a',
+      fontWeight: selected ? 700 : 400,
+    };
+    icon = <img src="https://docs.nervos.org/svg/square-script.svg" alt="Script" style={{ width: 16, height: 16, marginRight: 5, verticalAlign: 'middle' }} />;
+  }
   const textColor = selected || !grayInactive ? (isColorDark(color) ? '#fff' : '#222') : (grayInactive ? '#333' : '#fff');
   return (
     <span
@@ -45,14 +69,15 @@ function TagBadge({ tag, selected, onClick, style, grayInactive }) {
         borderRadius: 12,
         background: selected ? color : (grayInactive ? '#f0f0f0' : color),
         color: textColor,
-        border: selected ? `2px solid ${color}` : `1px solid #ccc`,
+        border: selected ? `1.2px solid ${color}` : `1px solid #ccc`,
         cursor: onClick ? 'pointer' : 'default',
         fontWeight: selected ? 700 : 400,
         fontSize: 13,
+        ...badgeStyle,
         ...style,
       }}
     >
-      {tag}
+      {icon}{tag}
     </span>
   );
 }
@@ -144,6 +169,26 @@ function LLMsActions({ llms, title }) {
         <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>{copyLinkStatus ? copyLinkStatus : "Link"}</span>
       </button>
     </div>
+  );
+}
+
+function DeepwikiBadge({ githubUrl }) {
+  // Extract owner/repo from the GitHub URL
+  const match = githubUrl.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+  if (!match) return null;
+  const owner = match[1];
+  const repo = match[2];
+  const deepwikiUrl = `https://deepwiki.com/${owner}/${repo}`;
+  return (
+    <a
+      href={deepwikiUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Ask DeepWiki"
+      style={{ display: 'flex', alignItems: 'center', verticalAlign: 'middle', marginLeft: 0 }}
+    >
+      <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" style={{ verticalAlign: 'middle' }} />
+    </a>
   );
 }
 
@@ -252,6 +297,10 @@ export default function AwesomePage() {
     <Layout title="Awesome Nervos CKB Ecosystem" description="Curated list of CKB ecosystem resources, filterable by tag.">
       <div className="container margin-vert--lg">
         <h1>Awesome Nervos CKB Ecosystem</h1>
+        <div style={{ marginBottom: 16, color: '#444', fontSize: 15, background: '#f8f9fa', border: '1px solid #eee', borderRadius: 8, padding: '10px 16px' }}>
+          <b>How to Use:</b> Browse and filter the list to find items you might be interested in. Use the tags to narrow down the results. <br /><br />
+          <b>Aggregation for AI (optional):</b> If you want to combine the LLMs context/resources from multiple items, use the checkboxes to select them. You can use the <b>select all</b> checkbox to select all visible items. After selecting, use the aggregation buttons below the table to copy a CORS-safe aggregate link or download the combined LLMs as <code>llms.txt</code>. This is an extra utility for advanced workflows, such as providing custom context to LLMs or AI tools.
+        </div>
         <div style={{ marginBottom: 16, display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
           <span style={{ marginRight: 8, fontWeight: 500 }}>Filter by tags:</span>
           {tags.map(tag => (
@@ -275,7 +324,7 @@ export default function AwesomePage() {
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              <th>
+              <th style={{ width: 36, borderBottom: "1px solid #ccc" }}>
                 <input
                   type="checkbox"
                   checked={allChecked}
@@ -284,29 +333,107 @@ export default function AwesomePage() {
                   title="Check all filtered"
                 />
               </th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Title</th>
+              <th style={{ minWidth: 260, width: 'auto', borderBottom: "1px solid #ccc", textAlign: "left" }}>Title</th>
               <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Description</th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Tags</th>
-              <th style={{ borderBottom: "1px solid #ccc", textAlign: "left", width: 110 }}>LLMs</th>
+              <th style={{ width: 230, borderBottom: "1px solid #ccc", textAlign: "left" }}>Tags</th>
+              <th style={{ width: 110, borderBottom: "1px solid #ccc", textAlign: "left" }}>LLMs</th>
             </tr>
           </thead>
           <tbody>
             {filtered.map(item => (
               <tr key={item.title}>
-                <td>
+                <td style={{ width: 36 }}>
                   <input
                     type="checkbox"
                     checked={checked.includes(item.title)}
                     onChange={() => handleCheck(item.title)}
                   />
                 </td>
-                <td>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    {item.title}
-                  </a>
+                <td style={{ minWidth: 260, width: 'auto' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    {item.link && (
+                      <img
+                        src={item.favicon ? item.favicon : (() => {
+                          try {
+                            const url = new URL(item.link);
+                            return url.origin + '/favicon.ico';
+                          } catch {
+                            return '';
+                          }
+                        })()}
+                        alt="favicon"
+                        style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                    <a href={item.link} target="_blank" rel="noopener noreferrer">
+                      {item.title}
+                    </a>
+                  </div>
+                  {(item.repo || (!item.repo && item.link && item.link.startsWith('https://github.com/'))) && (
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6, width: 'fit-content' }}>
+                      {item.repo && (
+                        <>
+                          <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <a
+                              href={item.repo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="View on GitHub"
+                              style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
+                            >
+                              {(() => {
+                                try {
+                                  const match = item.repo.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+                                  if (!match) throw new Error();
+                                  const owner = match[1];
+                                  const repo = match[2];
+                                  const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
+                                  return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                } catch {
+                                  return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                }
+                              })()}
+                            </a>
+                          </div>
+                          <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}><DeepwikiBadge githubUrl={item.repo} /></div>
+                        </>
+                      )}
+                      {!item.repo && item.link && item.link.startsWith('https://github.com/') && (
+                        <>
+                          <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="View on GitHub"
+                              style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
+                            >
+                              {(() => {
+                                try {
+                                  const match = item.link.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+                                  if (!match) throw new Error();
+                                  const owner = match[1];
+                                  const repo = match[2];
+                                  const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
+                                  return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                } catch {
+                                  return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                }
+                              })()}
+                            </a>
+                          </div>
+                          <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}><DeepwikiBadge githubUrl={item.link} /></div>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </td>
-                <td>{item.description}</td>
                 <td>
+                  {item.description}
+                </td>
+                <td style={{ width: 230 }}>
                   {item.tag.map(tag => (
                     <TagBadge
                       key={tag}
@@ -318,7 +445,7 @@ export default function AwesomePage() {
                     />
                   ))}
                 </td>
-                <td>
+                <td style={{ width: 110 }}>
                   <LLMsActions llms={item.llms} title={item.title} />
                 </td>
               </tr>

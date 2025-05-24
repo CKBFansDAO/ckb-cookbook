@@ -2,8 +2,8 @@ export const AwesomeList = [
   {
     title: "Nervos CKB Documentation",
     tag: [
-      "dApp",
-      "Script",
+      "Recommended for dApp",
+      "Recommended for Script",
       "Wallet",
       "DOB",
       "UDT",
@@ -14,12 +14,14 @@ export const AwesomeList = [
     ],
     description: "Nervos CKB Documentation. Most comprehensive documentation for CKB.",
     link: "https://docs.nervos.org/",
+    repo: "https://github.com/nervosnetwork/docs.nervos.org",
     llms: "https://context7.com/nervosnetwork/docs.nervos.org/llms.txt?tokens=300000",
+    favicon: "https://docs.nervos.org/img/favicon.png"
   },
   {
     title: "CCC - CKBers' Codebase",
     tag: [
-      "dApp",
+      "Recommended for dApp",
       "Wallet",
       "UDT",
       "DOB",
@@ -34,7 +36,7 @@ export const AwesomeList = [
   {
     title: "CKB JS VM",
     tag: [
-      "Script",
+      "Recommended for Script",
       "TypeScript",
       "JavaScript",
       "VM",
@@ -47,8 +49,8 @@ export const AwesomeList = [
   {
     title: "OffCKB",
     tag: [
-      "dApp",
-      "Script",
+      "Recommended for dApp",
+      "Recommended for Script",
       "TypeScript",
       "JavaScript",
       "Rust"
