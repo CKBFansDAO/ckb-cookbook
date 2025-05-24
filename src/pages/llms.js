@@ -26,7 +26,12 @@ export default function Llms() {
         const texts = await Promise.all(
           items.map(async item => {
             try {
-              const res = await fetch('https://corsproxy.io/?' + item.llms);
+              // Use proxy for context7.com URLs
+              let url = item.llms;
+              if (url.startsWith("https://context7.com/")) {
+                url = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(url);
+              }
+              const res = await fetch(url);
               if (!res.ok) return `Failed to fetch: ${item.title}`;
               return await res.text();
             } catch (e) {

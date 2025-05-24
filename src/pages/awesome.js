@@ -156,7 +156,12 @@ function LLMsActions({ llms, title }) {
   // Copy may fail if the clipboard API is denied by the user, or if fetch fails (e.g., network error or CORS)
   const handleCopyContent = async () => {
     try {
-      const res = await fetch(llms);
+      // Use proxy for context7.com URLs
+      let url = llms;
+      if (url.startsWith("https://context7.com/")) {
+        url = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(url);
+      }
+      const res = await fetch(url);
       const text = await res.text();
       await navigator.clipboard.writeText(text);
       setCopyStatus("Copied!");
