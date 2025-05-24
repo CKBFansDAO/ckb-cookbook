@@ -269,7 +269,9 @@ export default function AwesomePage() {
 
   const handleCopyAggregateLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.origin + aggregateUrl);
+      const url = window.location.origin + aggregateUrl;
+      const proxyUrl = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(url);
+      await navigator.clipboard.writeText(proxyUrl);
       setCopyAggStatus("Copied!");
       setTimeout(() => setCopyAggStatus(""), 1200);
     } catch {
