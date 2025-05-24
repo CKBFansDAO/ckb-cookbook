@@ -105,4 +105,44 @@ export const AwesomeList = [
     link: "https://github.com/nervosnetwork/ckb-js-vm",
     llms: "https://context7.com/nervosnetwork/ckb-js-vm/llms.txt"
   },
+  {
+    title: "ckb-std",
+    tag: [
+      "Recommended for Script",
+      "Rust",
+      "API References"
+    ],
+    description: "Official Rust API documentation for ckb-std, a library with modules and macros to help you write CKB contracts. Includes syscalls, high-level APIs, allocators, and utilities for contract development.",
+    link: "https://docs.rs/ckb-std/0.17.2/ckb_std/",
+    repo: "https://github.com/nervosnetwork/ckb-std",
+    llms: "https://context7.com/nervosnetwork/ckb-std/llms.txt",
+    favicon: "https://docs.rs/-/rustdoc.static/favicon-32x32-6580c154.png",
+  },
+  {
+    title: "ckb-ssri-std",
+    tag: [
+      "Recommended for Script",
+      "Rust",
+      "API References",
+      "SSRI",
+    ],
+    description: "Official Rust API documentation for ckb-ssri-std, a library providing utilities and traits for implementing SSRI-compliant smart contracts on Nervos CKB. Includes public traits, utility functions, and procedural macros for contract development.",
+    link: "https://docs.rs/ckb-ssri-std/latest/ckb_ssri_std/",
+    repo: "https://github.com/ckb-devrel/ckb-ssri-std",
+    llms: "https://context7.com/ckb-devrel/ckb-ssri-std/llms.txt",
+    favicon: "https://docs.rs/-/rustdoc.static/favicon-32x32-6580c154.png"
+  },
+  {
+    title: "ckb-sdk",
+    tag: [
+      "Recommended for dApp",
+      "Rust",
+      "API References",
+    ],
+    description: "Official Rust API documentation for ckb-sdk, the Rust SDK for Nervos CKB. Provides modules, types, and utilities for building CKB clients, interacting with nodes, and composing transactions.",
+    link: "https://docs.rs/ckb-sdk/latest/ckb_sdk/",
+    repo: "https://github.com/nervosnetwork/ckb-sdk-rust",
+    llms: "https://context7.com/nervosnetwork/ckb-sdk-rust/llms.txt",
+    favicon: "https://docs.rs/-/rustdoc.static/favicon-32x32-6580c154.png"
+  },
 ]; 
