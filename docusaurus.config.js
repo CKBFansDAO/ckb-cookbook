@@ -91,6 +91,7 @@ const config = {
             label: 'Documents',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
+          {to: '/awesome', label: 'Awesome', position: 'left'},
           {
             type: 'localeDropdown',
             position: 'right',
