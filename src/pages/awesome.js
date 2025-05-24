@@ -540,7 +540,9 @@ export default function AwesomePage() {
                     ))}
                   </td>
                   <td style={{ width: 100 }}>
-                    <LLMsActions llms={item.llms} title={item.title} />
+                    {(item.repo || (item.link && item.link.startsWith('https://github.com/')))
+                      ? <LLMsActions llms={item.llms} title={item.title} />
+                      : null}
                   </td>
                 </tr>
                 {item.children && item.children.map(child => (
@@ -659,7 +661,9 @@ export default function AwesomePage() {
                       ))}
                     </td>
                     <td style={{ width: 100 }}>
-                      <LLMsActions llms={child.llms} title={child.title} />
+                      {(child.repo || (child.link && child.link.startsWith('https://github.com/')))
+                        ? <LLMsActions llms={child.llms} title={child.title} />
+                        : null}
                     </td>
                   </tr>
                 ))}
