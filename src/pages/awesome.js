@@ -225,6 +225,8 @@ export default function AwesomePage() {
   const tags = getAllTags(AwesomeList);
   const history = useHistory();
   const [copyAggStatus, setCopyAggStatus] = useState("");
+  const [aggPreview, setAggPreview] = useState("");
+  const [aggLoading, setAggLoading] = useState(false);
 
   // Only show items that include all selected tags
   const filtered = selectedTags.length === 0
@@ -266,10 +268,12 @@ export default function AwesomePage() {
   };
 
   const aggregateUrl = `/llms?titles=${encodeURIComponent(checked.join(","))}`;
+  const apiAggregateUrl = `/api/llms-aggregate?titles=${encodeURIComponent(checked.join(","))}`;
 
   const handleCopyAggregateLink = async () => {
     try {
-      const url = window.location.origin + aggregateUrl;
+      const apiAggregateUrl = `/api/llms-aggregate?titles=${encodeURIComponent(checked.join(","))}`;
+      const url = window.location.origin + apiAggregateUrl;
       const proxyUrl = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(url);
       await navigator.clipboard.writeText(proxyUrl);
       setCopyAggStatus("Copied!");
@@ -277,6 +281,42 @@ export default function AwesomePage() {
     } catch {
       setCopyAggStatus("Failed");
       setTimeout(() => setCopyAggStatus(""), 1200);
+    }
+  };
+
+  // Fetch aggregation preview when checked changes
+  React.useEffect(() => {
+    if (checked.length > 0) {
+      setAggLoading(true);
+      setAggPreview("");
+      fetch(apiAggregateUrl)
+        .then(res => res.text())
+        .then(text => setAggPreview(text))
+        .catch(() => setAggPreview("Failed to fetch aggregation result."))
+        .finally(() => setAggLoading(false));
+    } else {
+      setAggPreview("");
+      setAggLoading(false);
+    }
+  }, [apiAggregateUrl, checked.length]);
+
+  const handleDownloadAggregated = async () => {
+    try {
+      const res = await fetch(apiAggregateUrl);
+      const text = await res.text();
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'llms.txt';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    } catch {
+      alert('Failed to download aggregated llms.txt');
     }
   };
 
@@ -358,11 +398,22 @@ export default function AwesomePage() {
           </tbody>
         </table>
         {checked.length > 0 && (
-          <div style={{ marginTop: 16, display: 'flex', gap: 12, alignItems: 'center' }}>
-            <button onClick={handleCopyAggregateLink}>
-              Copy aggregate link ({checked.length})
-            </button>
-            {copyAggStatus && <span>{copyAggStatus}</span>}
+          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              <button onClick={handleCopyAggregateLink}>
+                Copy aggregate link ({checked.length})
+              </button>
+              <button onClick={handleDownloadAggregated}>
+                Download Aggregated llms.txt
+              </button>
+              {copyAggStatus && <span>{copyAggStatus}</span>}
+            </div>
+            <div style={{ marginTop: 8, width: '100%' }}>
+              <div style={{ fontWeight: 500, marginBottom: 4 }}>Aggregated Preview:</div>
+              <pre style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 0, border: '1px solid #eee', background: '#fafbfc', fontFamily: 'inherit', fontSize: 'inherit', padding: 8, minHeight: 60, maxHeight: 320, overflow: 'auto'}}>
+                {aggLoading ? 'Loading...' : aggPreview}
+              </pre>
+            </div>
           </div>
         )}
       </div>

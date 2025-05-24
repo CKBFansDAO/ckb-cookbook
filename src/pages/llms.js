@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { AwesomeList } from "./awesome";
 import { useLocation } from '@docusaurus/router';
 
 function parseTitlesFromQuery(search) {
@@ -22,24 +21,14 @@ export default function Llms() {
         setLoading(true);
         setResult("");
         setDone(false);
-        const items = AwesomeList.filter(item => titles.includes(item.title));
-        const texts = await Promise.all(
-          items.map(async item => {
-            try {
-              // Use proxy for context7.com URLs
-              let url = item.llms;
-              if (url.startsWith("https://context7.com/")) {
-                url = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(url);
-              }
-              const res = await fetch(url);
-              if (!res.ok) return `Failed to fetch: ${item.title}`;
-              return await res.text();
-            } catch (e) {
-              return `Error fetching: ${item.title}`;
-            }
-          })
-        );
-        setResult(texts.join("\n\n---\n\n"));
+        try {
+          const param = encodeURIComponent(titles.join(","));
+          const res = await fetch(`/api/llms-aggregate?titles=${param}`);
+          const text = await res.text();
+          setResult(text);
+        } catch {
+          setResult("Failed to fetch aggregation result.");
+        }
         setLoading(false);
         setDone(true);
       })();
