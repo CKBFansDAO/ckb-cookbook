@@ -5,8 +5,10 @@ import { AwesomeList } from '../data/awesome-list';
 
 function getAllTags(list) {
   const all = Array.from(new Set(list.flatMap(item => item.tag)));
-  const rest = all.filter(t => t !== 'Recommended for dApp' && t !== 'Recommended for Script').sort();
-  return ['Recommended for dApp', 'Recommended for Script', ...rest];
+  const rest = all.filter(t => t !== 'Recommended' && t !== 'Outdated').sort();
+  const tags = ['Recommended', ...rest];
+  if (all.includes('Outdated')) tags.push('Outdated');
+  return tags;
 }
 
 // Simple color palette for tags
@@ -34,29 +36,44 @@ function isColorDark(hex) {
 
 function TagBadge({ tag, selected, onClick, style, grayInactive }) {
   // Special highlight for the two most important tags
-  const isRecommendedDapp = tag === 'Recommended for dApp';
-  const isRecommendedScript = tag === 'Recommended for Script';
+  const isRecommended = tag === 'Recommended';
+  const isOutdated = tag === 'Outdated';
   let color = tagColor(tag);
   let badgeStyle = {};
   let icon = null;
-  if (isRecommendedDapp) {
+  // Add warning sign for Outdated tag only when not in filter selector
+  const warningSign = isOutdated && !grayInactive ? '⚠️ ' : '';
+  if (isRecommended) {
     color = '#ff9800'; // orange
-    badgeStyle = {
-      border: '1px solid #ff9800',
-      background: selected ? '#ff9800' : '#fff8e1',
-      color: selected ? '#fff' : '#b26a00',
-      fontWeight: selected ? 700 : 400,
-    };
-    icon = <img src="https://docs.nervos.org/svg/square-dapp.svg" alt="dApp" style={{ width: 16, height: 16, marginRight: 5, verticalAlign: 'middle' }} />;
-  } else if (isRecommendedScript) {
-    color = '#1976d2'; // blue
-    badgeStyle = {
-      border: '1px solid #1976d2',
-      background: selected ? '#1976d2' : '#e3f2fd',
-      color: selected ? '#fff' : '#0d305a',
-      fontWeight: selected ? 700 : 400,
-    };
-    icon = <img src="https://docs.nervos.org/svg/square-script.svg" alt="Script" style={{ width: 16, height: 16, marginRight: 5, verticalAlign: 'middle' }} />;
+    if (grayInactive) {
+      badgeStyle = {
+        border: '1px solid #ff9800',
+        background: selected ? '#ff9800' : '#fff8e1',
+        color: selected ? '#fff' : '#b26a00',
+        fontWeight: selected ? 700 : 400,
+      };
+    } else {
+      badgeStyle = {
+        border: '1px solid #ff9800',
+        background: '#ff9800',
+        color: '#fff',
+        fontWeight: 700,
+      };
+    }
+    icon = <span style={{ marginRight: 5, verticalAlign: 'middle' }} role="img" aria-label="Recommended">👍</span>;
+  } else if (isOutdated) {
+    color = '#e53935'; // bold red
+    if (selected) {
+      badgeStyle = {
+        border: '1px solid #e53935',
+        background: '#e53935',
+        color: '#fff',
+        fontWeight: 700,
+      };
+    } else {
+      // Use grayInactive logic for unselected Outdated tag
+      badgeStyle = {};
+    }
   }
   const textColor = selected || !grayInactive ? (isColorDark(color) ? '#fff' : '#222') : (grayInactive ? '#333' : '#fff');
   return (
@@ -77,7 +94,7 @@ function TagBadge({ tag, selected, onClick, style, grayInactive }) {
         ...style,
       }}
     >
-      {icon}{tag}
+      {icon}{warningSign}{tag}
     </span>
   );
 }
@@ -118,6 +135,7 @@ function LLMsActions({ llms, title }) {
 
   // Helper to get context7 page for the llms URL
   const getContext7Url = (llmsUrl) => {
+    if (!llmsUrl) return '#';
     if (llmsUrl.startsWith("https://context7.com/")) {
       // Remove /llms.txt and anything after it (query, fragment)
       const llmsTxtIdx = llmsUrl.indexOf('/llms.txt');
@@ -141,10 +159,11 @@ function LLMsActions({ llms, title }) {
 
   // Copy may fail if the clipboard API is denied by the user, or if fetch fails (e.g., network error or CORS)
   const handleCopyContent = async () => {
+    if (!llms) return;
     try {
       // Use proxy for context7.com URLs
       let url = llms;
-      if (url.startsWith("https://context7.com/")) {
+      if (url && url.startsWith("https://context7.com/")) {
         url = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(url);
       }
       const res = await fetch(url);
@@ -159,6 +178,7 @@ function LLMsActions({ llms, title }) {
   };
 
   const handleCopyLink = async () => {
+    if (!llms) return;
     try {
       await navigator.clipboard.writeText(llms);
       setCopyLinkStatus("Copied!");
@@ -417,24 +437,33 @@ export default function AwesomePage() {
                   <td style={{ minWidth: 260, width: 'auto' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       {item.link && (
-                        <img
-                          src={item.favicon ? item.favicon : (() => {
-                            try {
-                              const url = new URL(item.link);
-                              return url.origin + '/favicon.ico';
-                            } catch {
-                              return '';
-                            }
-                          })()}
-                          alt="favicon"
-                          style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
-                          loading="lazy"
-                          referrerPolicy="no-referrer"
-                        />
+                        typeof item.favicon === 'string' && item.favicon.length === 2 && /\p{Emoji}/u.test(item.favicon)
+                          ? (
+                              <span style={{ width: 16, height: 16, marginRight: 6, fontSize: 16, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{item.favicon}</span>
+                            )
+                          : (
+                              <img
+                                src={item.favicon ? item.favicon : (() => {
+                                  try {
+                                    const url = new URL(item.link);
+                                    return url.origin + '/favicon.ico';
+                                  } catch {
+                                    return '';
+                                  }
+                                })()}
+                                alt="favicon"
+                                style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
+                                loading="lazy"
+                                referrerPolicy="no-referrer"
+                              />
+                            )
                       )}
                       <a href={item.link} target="_blank" rel="noopener noreferrer">
                         {item.title}
                       </a>
+                      {item.tag.includes('Outdated') && (
+                        <TagBadge tag="Outdated" grayInactive={false} style={{ marginLeft: 8 }} />
+                      )}
                     </div>
                     {(item.repo || (!item.repo && item.link && item.link.startsWith('https://github.com/'))) && (
                       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 0, marginTop: 6, width: 'fit-content', position: 'relative', zIndex: 1 }}>
@@ -527,24 +556,33 @@ export default function AwesomePage() {
                       <div style={{ position: 'absolute', left: 12, top: 0, bottom: 0, width: 0, borderLeft: '2px solid #e0e0e0', zIndex: 0 }} />
                       <div style={{ display: 'flex', alignItems: 'center', position: 'relative', zIndex: 1 }}>
                         {child.link && (
-                          <img
-                            src={child.favicon ? child.favicon : (() => {
-                              try {
-                                const url = new URL(child.link);
-                                return url.origin + '/favicon.ico';
-                              } catch {
-                                return '';
-                              }
-                            })()}
-                            alt="favicon"
-                            style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
-                            loading="lazy"
-                            referrerPolicy="no-referrer"
-                          />
+                          typeof child.favicon === 'string' && child.favicon.length === 2 && /\p{Emoji}/u.test(child.favicon)
+                            ? (
+                                <span style={{ width: 16, height: 16, marginRight: 6, fontSize: 16, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{child.favicon}</span>
+                              )
+                            : (
+                                <img
+                                  src={child.favicon ? child.favicon : (() => {
+                                    try {
+                                      const url = new URL(child.link);
+                                      return url.origin + '/favicon.ico';
+                                    } catch {
+                                      return '';
+                                    }
+                                  })()}
+                                  alt="favicon"
+                                  style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
+                                  loading="lazy"
+                                  referrerPolicy="no-referrer"
+                                />
+                              )
                         )}
                         <a href={child.link} target="_blank" rel="noopener noreferrer">
                           {child.title}
                         </a>
+                        {child.tag && child.tag.includes('Outdated') && (
+                          <TagBadge tag="Outdated" grayInactive={false} style={{ marginLeft: 8 }} />
+                        )}
                       </div>
                       {(child.repo || (!child.repo && child.link && child.link.startsWith('https://github.com/'))) && (
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 0, marginTop: 6, width: 'fit-content' }}>
