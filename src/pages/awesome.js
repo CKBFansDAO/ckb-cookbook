@@ -102,9 +102,42 @@ function LinkIcon() {
   );
 }
 
+function Context7Icon() {
+  return (
+    <img
+      src="https://context7.com/favicon.ico"
+      alt="Context7"
+      style={{ width: 16, height: 16, marginRight: 4, verticalAlign: 'middle' }}
+    />
+  );
+}
+
 function LLMsActions({ llms, title }) {
   const [copyStatus, setCopyStatus] = useState("");
   const [copyLinkStatus, setCopyLinkStatus] = useState("");
+
+  // Helper to get context7 page for the llms URL
+  const getContext7Url = (llmsUrl) => {
+    if (llmsUrl.startsWith("https://context7.com/")) {
+      // Remove /llms.txt and anything after it (query, fragment)
+      const llmsTxtIdx = llmsUrl.indexOf('/llms.txt');
+      let baseUrl = llmsUrl;
+      if (llmsTxtIdx !== -1) {
+        baseUrl = llmsUrl.slice(0, llmsTxtIdx);
+      }
+      // Remove trailing slash if present
+      if (baseUrl.endsWith('/')) baseUrl = baseUrl.slice(0, -1);
+      return baseUrl;
+    }
+    // For non-context7.com URLs, use the ?url= form
+    const llmsTxtIdx = llmsUrl.indexOf('/llms.txt');
+    let baseUrl = llmsUrl;
+    if (llmsTxtIdx !== -1) {
+      baseUrl = llmsUrl.slice(0, llmsTxtIdx);
+    }
+    return `https://context7.com/?url=${encodeURIComponent(baseUrl)}`;
+  };
+  const context7Url = getContext7Url(llms);
 
   // Copy may fail if the clipboard API is denied by the user, or if fetch fails (e.g., network error or CORS)
   const handleCopyContent = async () => {
@@ -137,14 +170,20 @@ function LLMsActions({ llms, title }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 80, maxWidth: 90, width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 80, maxWidth: 140, width: '100%' }}>
+      <a href={context7Url} target="_blank" rel="noopener noreferrer" title="Open in Context7" style={{ width: '100%' }}>
+        <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+          <Context7Icon />
+          <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>Context7</span>
+        </button>
+      </a>
       <a href={llms} target="_blank" rel="noopener noreferrer" title="Open LLMs plain text" style={{ width: '100%' }}>
-        <button type="button" style={{ padding: '2px 8px', width: '100%', maxWidth: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+        <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
           <RawIcon />
           <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>Raw</span>
         </button>
       </a>
-      <button type="button" style={{ padding: '2px 8px', width: '100%', maxWidth: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }} onClick={handleCopyContent} title="Copy LLMs content">
+      <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }} onClick={handleCopyContent} title="Copy LLMs content">
         <span style={{ display: 'inline-flex', alignItems: 'center' }} aria-label="Copy">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +203,7 @@ function LLMsActions({ llms, title }) {
         </span>
         <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>{copyStatus ? copyStatus : "Copy"}</span>
       </button>
-      <button type="button" style={{ padding: '2px 8px', width: '100%', maxWidth: 90, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }} onClick={handleCopyLink} title="Copy LLMs link">
+      <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }} onClick={handleCopyLink} title="Copy LLMs link">
         <LinkIcon />
         <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>{copyLinkStatus ? copyLinkStatus : "Link"}</span>
       </button>
@@ -248,10 +287,20 @@ export default function AwesomePage() {
   };
 
   const handleCheckAll = (e) => {
+    // Collect all visible titles, including children
+    const allTitles = [];
+    filtered.forEach(item => {
+      allTitles.push(item.title);
+      if (item.children && Array.isArray(item.children)) {
+        item.children.forEach(child => {
+          allTitles.push(child.title);
+        });
+      }
+    });
     if (e.target.checked) {
-      setChecked(prev => Array.from(new Set([...prev, ...allFilteredTitles])));
+      setChecked(prev => Array.from(new Set([...prev, ...allTitles])));
     } else {
-      setChecked(prev => prev.filter(title => !allFilteredTitles.includes(title)));
+      setChecked(prev => prev.filter(title => !allTitles.includes(title)));
     }
   };
 
@@ -351,7 +400,7 @@ export default function AwesomePage() {
               <th style={{ minWidth: 260, width: 'auto', borderBottom: "1px solid #ccc", textAlign: "left" }}>Title</th>
               <th style={{ borderBottom: "1px solid #ccc", textAlign: "left" }}>Description</th>
               <th style={{ width: 230, borderBottom: "1px solid #ccc", textAlign: "left" }}>Tags</th>
-              <th style={{ width: 110, borderBottom: "1px solid #ccc", textAlign: "left" }}>LLMs</th>
+              <th style={{ width: 100, borderBottom: "1px solid #ccc", textAlign: "left" }}>LLMs</th>
             </tr>
           </thead>
           <tbody>
@@ -461,7 +510,7 @@ export default function AwesomePage() {
                       />
                     ))}
                   </td>
-                  <td style={{ width: 110 }}>
+                  <td style={{ width: 100 }}>
                     <LLMsActions llms={item.llms} title={item.title} />
                   </td>
                 </tr>
@@ -571,7 +620,7 @@ export default function AwesomePage() {
                         />
                       ))}
                     </td>
-                    <td style={{ width: 110 }}>
+                    <td style={{ width: 100 }}>
                       <LLMsActions llms={child.llms} title={child.title} />
                     </td>
                   </tr>
