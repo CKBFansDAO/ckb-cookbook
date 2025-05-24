@@ -1,4 +1,4 @@
-import { AwesomeList } from "../src/pages/awesome";
+import { AwesomeList } from "../src/data/awesome-list";
 
 export default async function handler(req, res) {
   const { titles } = req.query;
