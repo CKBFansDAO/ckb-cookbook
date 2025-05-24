@@ -204,7 +204,22 @@ export default function AwesomePage() {
   // Only show items that include all selected tags
   const filtered = selectedTags.length === 0
     ? AwesomeList
-    : AwesomeList.filter(item => selectedTags.every(tag => item.tag.includes(tag)));
+    : AwesomeList.map(item => {
+        // If no children, filter as usual
+        if (!item.children) {
+          return selectedTags.every(tag => item.tag.includes(tag)) ? item : null;
+        }
+        // If has children, filter children
+        const matchingChildren = item.children.filter(child => selectedTags.every(tag => child.tag.includes(tag)));
+        const parentMatches = selectedTags.every(tag => item.tag.includes(tag));
+        if (parentMatches || matchingChildren.length > 0) {
+          return {
+            ...item,
+            children: matchingChildren
+          };
+        }
+        return null;
+      }).filter(Boolean);
 
   const allFilteredTitles = filtered.map(item => item.title);
   const allChecked = allFilteredTitles.length > 0 && allFilteredTitles.every(title => checked.includes(title));
@@ -341,114 +356,227 @@ export default function AwesomePage() {
           </thead>
           <tbody>
             {filtered.map(item => (
-              <tr key={item.title}>
-                <td style={{ width: 36 }}>
-                  <input
-                    type="checkbox"
-                    checked={checked.includes(item.title)}
-                    onChange={() => handleCheck(item.title)}
-                  />
-                </td>
-                <td style={{ minWidth: 260, width: 'auto' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    {item.link && (
-                      <img
-                        src={item.favicon ? item.favicon : (() => {
-                          try {
-                            const url = new URL(item.link);
-                            return url.origin + '/favicon.ico';
-                          } catch {
-                            return '';
-                          }
-                        })()}
-                        alt="favicon"
-                        style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
-                        loading="lazy"
-                        referrerPolicy="no-referrer"
-                      />
-                    )}
-                    <a href={item.link} target="_blank" rel="noopener noreferrer">
-                      {item.title}
-                    </a>
-                  </div>
-                  {(item.repo || (!item.repo && item.link && item.link.startsWith('https://github.com/'))) && (
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6, width: 'fit-content' }}>
-                      {item.repo && (
-                        <>
-                          <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <a
-                              href={item.repo}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              title="View on GitHub"
-                              style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
-                            >
-                              {(() => {
-                                try {
-                                  const match = item.repo.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
-                                  if (!match) throw new Error();
-                                  const owner = match[1];
-                                  const repo = match[2];
-                                  const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
-                                  return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
-                                } catch {
-                                  return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
-                                }
-                              })()}
-                            </a>
-                          </div>
-                          <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}><DeepwikiBadge githubUrl={item.repo} /></div>
-                        </>
-                      )}
-                      {!item.repo && item.link && item.link.startsWith('https://github.com/') && (
-                        <>
-                          <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <a
-                              href={item.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              title="View on GitHub"
-                              style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
-                            >
-                              {(() => {
-                                try {
-                                  const match = item.link.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
-                                  if (!match) throw new Error();
-                                  const owner = match[1];
-                                  const repo = match[2];
-                                  const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
-                                  return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
-                                } catch {
-                                  return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
-                                }
-                              })()}
-                            </a>
-                          </div>
-                          <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}><DeepwikiBadge githubUrl={item.link} /></div>
-                        </>
-                      )}
-                    </div>
-                  )}
-                </td>
-                <td>
-                  {item.description}
-                </td>
-                <td style={{ width: 230 }}>
-                  {item.tag.map(tag => (
-                    <TagBadge
-                      key={tag}
-                      tag={tag}
-                      selected={selectedTags.includes(tag)}
-                      onClick={() => toggleTag(tag)}
-                      style={{ marginRight: 2, marginBottom: 2 }}
-                      grayInactive={false}
+              <React.Fragment key={item.title}>
+                <tr>
+                  <td style={{ width: 36 }}>
+                    <input
+                      type="checkbox"
+                      checked={checked.includes(item.title)}
+                      onChange={() => handleCheck(item.title)}
                     />
-                  ))}
-                </td>
-                <td style={{ width: 110 }}>
-                  <LLMsActions llms={item.llms} title={item.title} />
-                </td>
-              </tr>
+                  </td>
+                  <td style={{ minWidth: 260, width: 'auto' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {item.link && (
+                        <img
+                          src={item.favicon ? item.favicon : (() => {
+                            try {
+                              const url = new URL(item.link);
+                              return url.origin + '/favicon.ico';
+                            } catch {
+                              return '';
+                            }
+                          })()}
+                          alt="favicon"
+                          style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                        />
+                      )}
+                      <a href={item.link} target="_blank" rel="noopener noreferrer">
+                        {item.title}
+                      </a>
+                    </div>
+                    {(item.repo || (!item.repo && item.link && item.link.startsWith('https://github.com/'))) && (
+                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 0, marginTop: 6, width: 'fit-content', position: 'relative', zIndex: 1 }}>
+                        {item.repo && (
+                          <>
+                            <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: 0, margin: 0 }}>
+                              <a
+                                href={item.repo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="View on GitHub"
+                                style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
+                              >
+                                {(() => {
+                                  try {
+                                    const match = item.repo.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+                                    if (!match) throw new Error();
+                                    const owner = match[1];
+                                    const repo = match[2];
+                                    const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
+                                    return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                  } catch {
+                                    return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                  }
+                                })()}
+                              </a>
+                            </div>
+                            <DeepwikiBadge githubUrl={item.repo} />
+                          </>
+                        )}
+                        {!item.repo && item.link && item.link.startsWith('https://github.com/') && (
+                          <>
+                            <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: 0, margin: 0 }}>
+                              <a
+                                href={item.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="View on GitHub"
+                                style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
+                              >
+                                {(() => {
+                                  try {
+                                    const match = item.link.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+                                    if (!match) throw new Error();
+                                    const owner = match[1];
+                                    const repo = match[2];
+                                    const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
+                                    return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                  } catch {
+                                    return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                  }
+                                })()}
+                              </a>
+                            </div>
+                            <DeepwikiBadge githubUrl={item.link} />
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    {item.description}
+                  </td>
+                  <td style={{ width: 230 }}>
+                    {item.tag.map(tag => (
+                      <TagBadge
+                        key={tag}
+                        tag={tag}
+                        selected={selectedTags.includes(tag)}
+                        onClick={() => toggleTag(tag)}
+                        style={{ marginRight: 2, marginBottom: 2 }}
+                        grayInactive={false}
+                      />
+                    ))}
+                  </td>
+                  <td style={{ width: 110 }}>
+                    <LLMsActions llms={item.llms} title={item.title} />
+                  </td>
+                </tr>
+                {item.children && item.children.map(child => (
+                  <tr key={child.title} style={{ background: '#fafbfc' }}>
+                    <td style={{ width: 36 }}>
+                      <input
+                        type="checkbox"
+                        checked={checked.includes(child.title)}
+                        onChange={() => handleCheck(child.title)}
+                      />
+                    </td>
+                    <td style={{ minWidth: 260, width: 'auto', paddingLeft: 32, borderLeft: '3px solid #eee', position: 'relative' }}>
+                      <div style={{ position: 'absolute', left: 12, top: 0, bottom: 0, width: 0, borderLeft: '2px solid #e0e0e0', zIndex: 0 }} />
+                      <div style={{ display: 'flex', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+                        {child.link && (
+                          <img
+                            src={child.favicon ? child.favicon : (() => {
+                              try {
+                                const url = new URL(child.link);
+                                return url.origin + '/favicon.ico';
+                              } catch {
+                                return '';
+                              }
+                            })()}
+                            alt="favicon"
+                            style={{ width: 16, height: 16, marginRight: 6, borderRadius: 3, background: '#fff', objectFit: 'contain' }}
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                          />
+                        )}
+                        <a href={child.link} target="_blank" rel="noopener noreferrer">
+                          {child.title}
+                        </a>
+                      </div>
+                      {(child.repo || (!child.repo && child.link && child.link.startsWith('https://github.com/'))) && (
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 0, marginTop: 6, width: 'fit-content' }}>
+                          {child.repo && (
+                            <>
+                              <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: 0, margin: 0 }}>
+                                <a
+                                  href={child.repo}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title="View on GitHub"
+                                  style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
+                                >
+                                  {(() => {
+                                    try {
+                                      const match = child.repo.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+                                      if (!match) throw new Error();
+                                      const owner = match[1];
+                                      const repo = match[2];
+                                      const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
+                                      return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                    } catch {
+                                      return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                    }
+                                  })()}
+                                </a>
+                              </div>
+                              <DeepwikiBadge githubUrl={child.repo} />
+                            </>
+                          )}
+                          {!child.repo && child.link && child.link.startsWith('https://github.com/') && (
+                            <>
+                              <div style={{ width: 100, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: 0, margin: 0 }}>
+                                <a
+                                  href={child.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  title="View on GitHub"
+                                  style={{ verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }}
+                                >
+                                  {(() => {
+                                    try {
+                                      const match = child.link.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)(?:$|\/|#|\?)/);
+                                      if (!match) throw new Error();
+                                      const owner = match[1];
+                                      const repo = match[2];
+                                      const badgeUrl = `https://img.shields.io/github/stars/${owner}/${repo}`;
+                                      return <img src={badgeUrl} alt="GitHub Stars" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                    } catch {
+                                      return <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" style={{ height: 20, verticalAlign: 'middle', flexShrink: 0, display: 'block', padding: 0, margin: 0 }} />;
+                                    }
+                                  })()}
+                                </a>
+                              </div>
+                              <DeepwikiBadge githubUrl={child.link} />
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      {child.description}
+                    </td>
+                    <td style={{ width: 230 }}>
+                      {child.tag.map(tag => (
+                        <TagBadge
+                          key={tag}
+                          tag={tag}
+                          selected={selectedTags.includes(tag)}
+                          onClick={() => toggleTag(tag)}
+                          style={{ marginRight: 2, marginBottom: 2 }}
+                          grayInactive={false}
+                        />
+                      ))}
+                    </td>
+                    <td style={{ width: 110 }}>
+                      <LLMsActions llms={child.llms} title={child.title} />
+                    </td>
+                  </tr>
+                ))}
+              </React.Fragment>
             ))}
           </tbody>
         </table>
