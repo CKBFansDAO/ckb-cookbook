@@ -5,8 +5,8 @@ import { AwesomeList } from '../data/awesome-list';
 
 function getAllTags(list) {
   const all = Array.from(new Set(list.flatMap(item => item.tag)));
-  const rest = all.filter(t => t !== 'Recommended' && t !== 'Outdated').sort();
-  const tags = ['Recommended', ...rest];
+  const rest = all.filter(t => t !== 'Recommended' && t !== 'Outdated' && t !== 'dApp' && t !== 'Script' && t !== 'Non-Technical' && t !== '中文（Chinese）' && t !== 'Social Media').sort();
+  const tags = ['Recommended', 'dApp', 'Script', 'Non-Technical', '中文（Chinese）', 'Social Media', ...rest];
   if (all.includes('Outdated')) tags.push('Outdated');
   return tags;
 }
@@ -90,6 +90,7 @@ function TagBadge({ tag, selected, onClick, style, grayInactive }) {
         cursor: onClick ? 'pointer' : 'default',
         fontWeight: selected ? 700 : 400,
         fontSize: 13,
+        whiteSpace: 'nowrap',
         ...badgeStyle,
         ...style,
       }}
@@ -261,7 +262,7 @@ export default function AwesomePage() {
   const [aggLoading, setAggLoading] = useState(false);
 
   // Only show items that include all selected tags
-  const filtered = selectedTags.length === 0
+  let filtered = selectedTags.length === 0
     ? AwesomeList
     : AwesomeList.map(item => {
         // If no children, filter as usual
@@ -279,6 +280,12 @@ export default function AwesomePage() {
         }
         return null;
       }).filter(Boolean);
+
+  // Move all outdated items to the end
+  filtered = [
+    ...filtered.filter(item => !item.tag.includes('Outdated')),
+    ...filtered.filter(item => item.tag.includes('Outdated'))
+  ];
 
   const allFilteredTitles = filtered.map(item => item.title);
   const allChecked = allFilteredTitles.length > 0 && allFilteredTitles.every(title => checked.includes(title));
@@ -310,10 +317,12 @@ export default function AwesomePage() {
     // Collect all visible titles, including children
     const allTitles = [];
     filtered.forEach(item => {
-      allTitles.push(item.title);
+      const itemEnabled = item.repo || (item.link && item.link.startsWith('https://github.com/'));
+      if (itemEnabled) allTitles.push(item.title);
       if (item.children && Array.isArray(item.children)) {
         item.children.forEach(child => {
-          allTitles.push(child.title);
+          const childEnabled = child.repo || (child.link && child.link.startsWith('https://github.com/'));
+          if (childEnabled) allTitles.push(child.title);
         });
       }
     });
@@ -432,6 +441,7 @@ export default function AwesomePage() {
                       type="checkbox"
                       checked={checked.includes(item.title)}
                       onChange={() => handleCheck(item.title)}
+                      disabled={!(item.repo || (item.link && item.link.startsWith('https://github.com/')))}
                     />
                   </td>
                   <td style={{ minWidth: 260, width: 'auto' }}>
@@ -552,6 +562,7 @@ export default function AwesomePage() {
                         type="checkbox"
                         checked={checked.includes(child.title)}
                         onChange={() => handleCheck(child.title)}
+                        disabled={!(child.repo || (child.link && child.link.startsWith('https://github.com/')))}
                       />
                     </td>
                     <td style={{ minWidth: 260, width: 'auto', paddingLeft: 32, borderLeft: '3px solid #eee', position: 'relative' }}>
