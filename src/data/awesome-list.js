@@ -217,7 +217,6 @@ export const AwesomeList = [
     title: "CKB Docs",
     tag: [
       "Outdated",
-      "Documentation",
       "Blogs",
       "Infrastructure",
       "JavaScript",
@@ -335,9 +334,10 @@ export const AwesomeList = [
     favicon: "https://www.svgrepo.com/show/353655/discord-icon.svg"
   },
   {
-    title: "CKB Dapps",
+    title: "CKB dApps",
     tag: [
       "Recommended",
+      "dApp",
     ],
     description: "CKB Dapps: A curated directory of dApps and ecosystem projects built on Nervos CKB.",
     link: "https://ckbdapps.com/",
@@ -363,5 +363,52 @@ export const AwesomeList = [
     description: "A comprehensive but now outdated hub of developer resources, SDKs, guides, and technical links for Nervos CKB and the Nervos Network. Includes links to docs, SDKs, economic model, consensus, programming guides, Layer2s, and more. Some links and recommendations may be deprecated. See thread for details.",
     link: "https://talk.nervos.org/t/nervos-network-developers-resources-hub/7261",
     favicon: "https://talk.nervos.org/uploads/default/optimized/2X/c/c4292978a632f0d8a62117254152faa824e41bdf_2_32x32.png"
+  },
+  {
+    title: "Molecule",
+    tag: [
+      "Recommended",
+      "Rust",
+      "Script",
+      "Other Languages",
+    ],
+    description: "Molecule is a minimalist, canonical serialization system used in Nervos CKB. Provides schema language, code generation, and multi-language support for deterministic data structures.",
+    link: "https://github.com/nervosnetwork/molecule",
+    llms: "https://context7.com/nervosnetwork/molecule/llms.txt",
+    favicon: "https://github.com/nervosnetwork.png"
+  },
+  {
+    title: "moleculec-es",
+    tag: [
+      "dApp",
+      "TypeScript",
+      "JavaScript",
+      "Toolchains",
+    ],
+    description: "ECMAScript/TypeScript code generator for the Molecule serialization system. Enables schema-driven, canonical serialization for CKB dApps and tooling.",
+    link: "https://github.com/nervosnetwork/moleculec-es",
+    repo: "https://github.com/nervosnetwork/moleculec-es",
+    favicon: "https://github.com/nervosnetwork.png"
+  },
+  {
+    title: "ckb-cli",
+    tag: [
+      "Toolchains",
+    ],
+    description: "Official command line tool for Nervos CKB. Supports account management, transaction signing, wallet operations, DAO, utilities, and more.",
+    link: "https://github.com/nervosnetwork/ckb-cli",
+    llms: "https://context7.com/nervosnetwork/ckb-cli/llms.txt",
+    favicon: "https://github.com/nervosnetwork.png"
+  },
+  {
+    title: "ccc-deploy",
+    tag: [
+      "Recommended",
+      "Toolchains",
+    ],
+    description: "CLI tool for deploying and managing scripts.",
+    link: "https://github.com/ckb-devrel/ccc-deploy",
+    llms: "https://context7.com/ckb-devrel/ccc-deploy/llms.txt",
+    favicon: "https://github.com/ckb-devrel.png"
   },
 ]
