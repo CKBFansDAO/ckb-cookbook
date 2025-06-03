@@ -314,15 +314,17 @@ export default function AwesomePage() {
   };
 
   const handleCheckAll = (e) => {
-    // Collect all visible titles, including children
+    // Collect all visible titles, including children, but exclude 'Outdated' items
     const allTitles = [];
     filtered.forEach(item => {
-      const itemEnabled = item.repo || (item.link && item.link.startsWith('https://github.com/'));
-      if (itemEnabled) allTitles.push(item.title);
+      const isOutdated = item.tag && item.tag.includes('Outdated');
+      const itemEnabled = (item.repo || (item.link && item.link.startsWith('https://github.com/')));
+      if (itemEnabled && !isOutdated) allTitles.push(item.title);
       if (item.children && Array.isArray(item.children)) {
         item.children.forEach(child => {
-          const childEnabled = child.repo || (child.link && child.link.startsWith('https://github.com/'));
-          if (childEnabled) allTitles.push(child.title);
+          const childIsOutdated = child.tag && child.tag.includes('Outdated');
+          const childEnabled = (child.repo || (child.link && child.link.startsWith('https://github.com/')));
+          if (childEnabled && !childIsOutdated) allTitles.push(child.title);
         });
       }
     });

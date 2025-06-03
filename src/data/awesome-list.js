@@ -7,8 +7,7 @@ export const AwesomeList = [
       "DOB",
       "UDT",
       "Infrastructure",
-      "TypeScript",
-      "JavaScript",
+      "JavaScript/TypeScript",
       "Rust",
       "Script",
       "dApp",
@@ -24,8 +23,7 @@ export const AwesomeList = [
         title: "OffCKB",
         tag: [
           "Recommended",
-          "TypeScript",
-          "JavaScript",
+          "JavaScript/TypeScript",
           "Rust"
         ],
         description:
@@ -62,8 +60,7 @@ export const AwesomeList = [
     tag: [
       "Recommended",
       "dApp",
-      "TypeScript",
-      "JavaScript",
+      "JavaScript/TypeScript",
       "Wallet",
       "API References",
       "Tutorials",
@@ -81,8 +78,7 @@ export const AwesomeList = [
           "Recommended",
           "dApp",
           "Wallet",
-          "TypeScript",
-          "JavaScript"
+          "JavaScript/TypeScript",
         ],
         description: "CCC Playground is an interactive web IDE for experimenting with CCC and CKB development. Run code, visualize data, and share your experiments instantly—no setup required.",
         link: "https://live.ckbccc.com/",
@@ -96,8 +92,7 @@ export const AwesomeList = [
           "Wallet",
           "UDT",
           "DOB",
-          "TypeScript",
-          "JavaScript",
+          "JavaScript/TypeScript",
         ],
         description:
           "CCC - CKBers' Codebase is a one-stop solution for your CKB JS/TS ecosystem development.",
@@ -125,8 +120,7 @@ export const AwesomeList = [
     title: "CKB JS VM",
     tag: [
       "Recommended",
-      "TypeScript",
-      "JavaScript",
+      "JavaScript/TypeScript",
       "VM",
     ],
     description:
@@ -180,8 +174,7 @@ export const AwesomeList = [
     tag: [
       "Recommended",
       "dApp",
-      "TypeScript",
-      "JavaScript",
+      "JavaScript/TypeScript",
       "DOB"
     ],
     description: "The Ultimate TypeScript SDK for Spore Protocol. Spore SDK is a comprehensive web development kit for seamless integration with Spore, an on-chain asset protocol built on CKB. It provides composed APIs, utilities, and tools for building spore-related dApps, including encoding/decoding, transaction construction, and more.",
@@ -194,6 +187,7 @@ export const AwesomeList = [
     tag: [
       "Recommended",
       "Rust",
+      "dApp",
       "API References",
     ],
     description: "Official Rust API documentation for ckb-sdk, the Rust SDK for Nervos CKB. Provides modules, types, and utilities for building CKB clients, interacting with nodes, and composing transactions.",
@@ -201,6 +195,28 @@ export const AwesomeList = [
     repo: "https://github.com/nervosnetwork/ckb-sdk-rust",
     llms: "https://context7.com/nervosnetwork/ckb-sdk-rust/llms.txt",
     favicon: "https://docs.rs/-/rustdoc.static/favicon-32x32-6580c154.png"
+  },
+  {
+    title: "ckb-sdk-java",
+    tag: [
+      "Java",
+      "dApp"
+    ],
+    description: "Official Java SDK for Nervos CKB. Provides APIs and utilities for building, signing, and sending transactions, address generation, and interacting with CKB nodes. Open source and production-ready.",
+    link: "https://github.com/nervosnetwork/ckb-sdk-java",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-sdk-java/llms.txt"
+  },
+  {
+    title: "ckb-sdk-go",
+    tag: [
+      "Go",
+      "dApp",
+    ],
+    description: "Official Go SDK for Nervos CKB. Provides APIs and utilities for building, signing, and sending transactions, address generation, and interacting with CKB nodes. Open source and production-ready.",
+    link: "https://github.com/nervosnetwork/ckb-sdk-go",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-sdk-go/llms.txt"
   },
   {
     title: "CKB入门手册",
@@ -219,8 +235,7 @@ export const AwesomeList = [
       "Outdated",
       "Blogs",
       "Infrastructure",
-      "JavaScript",
-      "TypeScript",
+      "JavaScript/TypeScript",
       "dApp",
       "Script",
       "Other Languages",
@@ -235,8 +250,7 @@ export const AwesomeList = [
     title: "Lumos",
     tag: [
       "Outdated",
-      "JavaScript",
-      "TypeScript",
+      "JavaScript/TypeScript",
       "dApp"
     ],
     description: "Lumos is a full featured dapp framework for Nervos CKB. It is now considered outdated; use CCC for new projects. See the repo for details.",
@@ -381,8 +395,7 @@ export const AwesomeList = [
     title: "moleculec-es",
     tag: [
       "dApp",
-      "TypeScript",
-      "JavaScript",
+      "JavaScript/TypeScript",
       "Toolchains",
     ],
     description: "ECMAScript/TypeScript code generator for the Molecule serialization system. Enables schema-driven, canonical serialization for CKB dApps and tooling.",
@@ -410,5 +423,267 @@ export const AwesomeList = [
     link: "https://github.com/ckb-devrel/ccc-deploy",
     llms: "https://context7.com/ckb-devrel/ccc-deploy/llms.txt",
     favicon: "https://github.com/ckb-devrel.png"
+  },
+  {
+    title: "pausable-udt",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "Rust",
+      "Script",
+      "UDT",
+      "SSRI"
+    ],
+    description: "SSRI-compliant smart contract implementing a pausable User-Defined Token (UDT) on Nervos CKB. Supports mint, transfer, burn, and pausing via public pause lists. Fully audited, production-ready, and extensible for dApps and DeFi.",
+    link: "https://github.com/Alive24/pausable-udt",
+    llms: "https://context7.com/Alive24/pausable-udt/llms.txt",
+    favicon: "https://github.com/Alive24.png",
+  },
+  {
+    title: "Silent Berry",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "Rust",
+      "JavaScript/TypeScript",
+      "Script",
+      "RGB++",
+      "DOB",
+      "dApp"
+    ],
+    description: "Decentralized publishing platform based on the RGB++ protocol, enabling authors to inscribe book content onto the Bitcoin blockchain and issue multi-tier NFTs for ownership and revenue rights. Supports cross-chain, royalty sharing, and innovative digital asset models. Also showcased how to write contract with ckb-js-vm.",
+    link: "https://github.com/ksleifjsslsls/silent-berry2/tree/re-js",
+    favicon: "https://github.com/ksleifjsslsls.png",
+    llms: "https://context7.com/ksleifjsslsls/silent-berry2/llms.txt",
+  },
+  {
+    title: "Neuron Wallet",
+    tag: [
+      "Wallet",
+    ],
+    description: "Official Nervos CKB full-node desktop wallet. Supports CKB mainnet/testnet, sUDT, DAO, and advanced features. Cross-platform, open source, and actively maintained.",
+    link: "https://github.com/nervosnetwork/neuron",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/neuron/llms.txt"
+  },
+  {
+    title: "ckb-vm",
+    tag: [
+      "Rust",
+      "VM",
+      "Infrastructure"
+    ],
+    description: "Pure Rust implementation of the RISC-V virtual machine used as the scripting VM in Nervos CKB. Production-grade, open source, and supports both 32/64-bit, with ASM and interpreter modes.",
+    link: "https://github.com/nervosnetwork/ckb-vm",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-vm/llms.txt"
+  },
+  {
+    title: "ckb-explorer",
+    tag: [
+      "Recommended",
+      "Infrastructure",
+      "Ruby",
+      "JavaScript/TypeScript",
+    ],
+    description: "Official Nervos CKB blockchain explorer. Search and visualize blocks, transactions, addresses, and on-chain data. Built with React and Ruby on Rails, open source, and production-ready.",
+    link: "https://github.com/nervosnetwork/ckb-explorer",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-explorer/llms.txt"
+  },
+  {
+    title: "ckb-standalone-debugger",
+    tag: [
+      "Recommended",
+      "Rust",
+      "Toolchains",
+    ],
+    description: "Standalone debugger and toolset for CKB smart contract development. Enables off-chain debugging, profiling, and analysis of CKB scripts. Includes command-line tools for offline contract development.",
+    link: "https://github.com/nervosnetwork/ckb-standalone-debugger",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-standalone-debugger/llms.txt"
+  },
+  {
+    title: "ckb-bitcoin-spv-contracts",
+    tag: [
+      "Infrastructure"
+    ],
+    description: "Bitcoin SPV client implementation as CKB contracts. Enables Bitcoin proof verification on CKB. Includes audit report.",
+    link: "https://github.com/utxostack/ckb-bitcoin-spv-contracts",
+    favicon: "https://github.com/utxostack.png",
+  },
+  {
+    title: "capsule",
+    tag: [
+      "Outdated",
+      "Rust",
+      "Script"
+    ],
+    description: "Out-of-the-box development framework for creating smart contracts on Nervos CKB. Provides scaffolding, reproducible builds, and testing tools. Deprecated: use ckb-script-templates for new projects.",
+    link: "https://github.com/nervosnetwork/capsule",
+    llms: "https://context7.com/nervosnetwork/capsule/llms.txt",
+    favicon: "https://github.com/nervosnetwork.png"
+  },
+  {
+    title: "ckb-c-stdlib",
+    tag: [
+      "Script",
+      "C",
+    ],
+    description: "Official C standard library and utilities for CKB script development. Provides CKB data structures, syscall utilities, and a tailored libc for CKB smart contracts. Usable from C, Rust (via FFI), and other languages.",
+    link: "https://github.com/nervosnetwork/ckb-c-stdlib",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-c-stdlib/llms.txt"
+  },
+  {
+    title: "force-bridge",
+    tag: [
+      "Infrastructure"
+    ],
+    description: "General cross-chain bridge for Nervos CKB, supporting asset and NFT transfers between CKB and other blockchains (e.g., Ethereum, BTC, EOS, TRON, Cardano, Polkadot). Open source, production-grade, and actively developed.",
+    link: "https://github.com/nervosnetwork/force-bridge",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/force-bridge/llms.txt"
+  },
+  {
+    title: "ckb-testtool",
+    tag: [
+      "Recommended",
+      "Rust",
+      "Script",
+    ],
+    description: "Helper library for writing CKB script test cases in Rust. Migrated from capsule, widely used for contract/unit testing. See docs.rs for API reference.",
+    link: "https://github.com/nervosnetwork/ckb-testtool",
+    favicon: "https://github.com/nervosnetwork.png",
+    llms: "https://context7.com/nervosnetwork/ckb-testtool/llms.txt"
+  },
+  {
+    title: "spore-contract",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "Rust",
+      "Script",
+      "DOB"
+    ],
+    description: "Spore Protocol smart contracts for digital asset ownership, distribution, and value capture on CKB. Written in Rust. Developers are encouraged to use the Spore SDK for dApp integration.",
+    link: "https://github.com/sporeprotocol/spore-contract",
+    favicon: "https://github.com/sporeprotocol.png",
+    llms: "https://context7.com/sporeprotocol/spore-contract/llms.txt"
+  },
+  {
+    title: "dob-cookbook",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "DOB",
+      "Tutorials"
+    ],
+    description: "Comprehensive collection of Digital Object (DOB) protocol examples and best practices on Nervos CKB. Practical guide for DOB issuers, with implementation patterns, rendering effects, and compatibility info.",
+    link: "https://github.com/sporeprotocol/dob-cookbook",
+    favicon: "https://github.com/sporeprotocol.png",
+    llms: "https://context7.com/sporeprotocol/dob-cookbook/llms.txt"
+  },
+  {
+    title: "spore-docs",
+    tag: [
+      "Recommended",
+      "Tutorials",
+      "dApp",
+      "JavaScript/TypeScript",
+      "DOB",
+    ],
+    description: "Official documentation for Spore Protocol. Includes basics, tutorials, recipes, and developer resources for building with Spore and DOB on Nervos CKB.",
+    link: "https://github.com/sporeprotocol/spore-docs",
+    favicon: "https://github.com/sporeprotocol.png",
+    llms: "https://context7.com/sporeprotocol/spore-docs/llms.txt"
+  },
+  {
+    title: "spore-graphql",
+    tag: [
+      "Recommended",
+      "dApp",
+      "JavaScript/TypeScript",
+      "DOB",
+    ],
+    description: "GraphQL layer for Spore Protocol, simplifying data queries and integration for dApps. Built with TypeScript, easily embeddable, supports advanced queries, and runs on Apollo GraphQL.",
+    link: "https://github.com/sporeprotocol/spore-graphql",
+    favicon: "https://github.com/sporeprotocol.png",
+    llms: "https://context7.com/sporeprotocol/spore-graphql/llms.txt"
+  },
+  {
+    title: "dob-decoder-standalone-server",
+    tag: [
+      "Recommended",
+      "Rust",
+      "DOB",
+      "dApp",
+      "Infrastructure"
+    ],
+    description: "Standalone server for decoding and rendering Digital Object (DOB) protocol assets on Nervos CKB. Features embedded ckb-vm executor, JSON-RPC API, decoder and render caching, and supports both code_hash and type_id decoders. Usable as a library or server for dApps and integrations.",
+    link: "https://github.com/sporeprotocol/dob-decoder-standalone-server",
+    favicon: "https://github.com/sporeprotocol.png",
+    llms: "https://context7.com/sporeprotocol/dob-decoder-standalone-server/llms.txt"
+  },
+  {
+    title: "spore-demo",
+    tag: [
+      "Recommended",
+      "dApp",
+      "JavaScript/TypeScript",
+      "DOB",
+      "Example Project",
+    ],
+    description: "Demo dApp for Spore Protocol built with Next.js, React, and Spore SDK. Showcases cluster creation, spore minting, transfer, and melting. Integrates MetaMask and Spore GraphQL. Great starting point for Spore-based dApp development.",
+    link: "https://github.com/sporeprotocol/spore-demo",
+    favicon: "https://github.com/sporeprotocol.png",
+    llms: "https://context7.com/sporeprotocol/spore-demo/llms.txt"
+  },
+  {
+    title: "ckb-lua",
+    tag: [
+      "Lua",
+      "Script",
+    ],
+    description: "Enables developers to write CKB-VM scripts in Lua. Provides dynamic library and standalone loader for Lua smart contracts on Nervos CKB. Includes examples, tests, and integration guides.",
+    link: "https://github.com/contrun/ckb-lua",
+    favicon: "https://github.com/contrun.png",
+    llms: "https://context7.com/contrun/ckb-lua/llms.txt"
+  },
+  {
+    title: "quantum-resistant-lock-script",
+    tag: [
+      "C",
+      "Script",
+    ],
+    description: "Quantum-resistant lock script for Nervos CKB using SPHINCS+. Provides tools to convert SECP256K1/blake160 locks to quantum-resistant locks, supports multiple hash types, and includes deployment/test guides.",
+    link: "https://github.com/cryptape/quantum-resistant-lock-script",
+    favicon: "https://github.com/cryptape.png",
+    llms: "https://context7.com/cryptape/quantum-resistant-lock-script/llms.txt"
+  },
+  {
+    title: "utxoswap-sdk-js",
+    tag: [
+      "Recommended",
+      "JavaScript/TypeScript",
+      "dApp",
+    ],
+    description: "UTXO Swap SDK for Nervos CKB. Provides APIs and utilities for building swap dApps, querying pools, calculating outputs, and integrating with CKB and swap backend. Includes React example and supports custom signing.",
+    link: "https://github.com/UTXOSwap/utxoswap-sdk-js",
+    favicon: "https://github.com/UTXOSwap.png",
+    llms: "https://context7.com/UTXOSwap/utxoswap-sdk-js/llms.txt"
+  },
+  {
+    title: "quantum-purse-web-static",
+    tag: [
+      "Recommended",
+      "Wallet",
+      "JavaScript/TypeScript",
+      "Example Project",
+    ],
+    description: "Quantum Purse is a quantum-safe wallet for Nervos CKB, implemented as a static web app. Supports SPHINCS+ signatures, local encryption, light client, and multiple NIST parameter sets. Runs fully in-browser for maximum privacy and security.",
+    link: "https://github.com/tea2x/quantum-purse-web-static",
+    favicon: "https://github.com/tea2x.png",
+    llms: "https://context7.com/tea2x/quantum-purse-web-static/llms.txt"
   },
 ]
