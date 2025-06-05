@@ -20,7 +20,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'CKBFans', // Usually your GitHub org/user name.
+  organizationName: 'CKBFansDAO', // Usually your GitHub org/user name.
   projectName: 'ckb-cookbook', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -29,6 +29,7 @@ const config = {
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
+  /*
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh'],
@@ -43,7 +44,7 @@ const config = {
       },
     },
   },
-
+  */
   presets: [
     [
       'classic',
@@ -92,10 +93,10 @@ const config = {
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {to: '/awesome', label: 'Awesome', position: 'left'},
-          {
+          /*{
             type: 'localeDropdown',
             position: 'right',
-          },
+          },*/
           {
             href: 'https://github.com/CKBFansDAO/ckb-cookbook',
             label: 'GitHub',
@@ -147,7 +148,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} CKB Cookbook, Inc.`,
+        copyright: `Copyright © 2024-${new Date().getFullYear()} CKB Cookbook, Inc.`,
       },
       prism: {
         theme: prismThemes.github,

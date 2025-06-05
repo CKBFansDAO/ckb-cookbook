@@ -1,4 +1,12 @@
 {
+  "title": {
+    "message": "CKB 开发指南",
+    "description": "The title in the navbar"
+  },
+  "tagline": {
+    "message": "如何在 CKB 上进行开发",
+    "description": "The tagline displayed under the title"
+  },
   "theme.ErrorPageContent.title": {
     "message": "页面已崩溃。",
     "description": "The title of the fallback page when the page crashed"
