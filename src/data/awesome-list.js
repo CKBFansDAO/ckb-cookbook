@@ -678,12 +678,34 @@ export const AwesomeList = [
     tag: [
       "Recommended",
       "JavaScript/TypeScript",
+      "SDK",
       "dApp",
+      "CKB",
+      "Swap",
+      "DeFi",
+      "Open Source"
     ],
     description: "UTXO Swap SDK for Nervos CKB. Provides APIs and utilities for building swap dApps, querying pools, calculating outputs, and integrating with CKB and swap backend. Includes React example and supports custom signing.",
     link: "https://github.com/UTXOSwap/utxoswap-sdk-js",
     favicon: "https://github.com/UTXOSwap.png",
     llms: "https://context7.com/UTXOSwap/utxoswap-sdk-js/llms.txt"
+  },
+  {
+    title: "ckb-autotrader",
+    tag: [
+      "Recommended",
+      "TypeScript",
+      "Backend",
+      "Bot",
+      "CKB",
+      "Swap",
+      "DeFi",
+      "Open Source"
+    ],
+    description: "Generic scaffold and exemplary project for building backend and bot services for CKB projects. Modular, extensible, and demonstrates best practices for CKB-related services, including balance checking, UTXOSwap pool checking, and token redistribution.",
+    link: "https://github.com/Alive24/ckb-autotrader",
+    favicon: "https://github.com/Alive24.png",
+    llms: "https://context7.com/Alive24/ckb-autotrader/llms.txt"
   },
   {
     title: "quantum-purse-web-static",
@@ -738,5 +760,36 @@ export const AwesomeList = [
     repo: "https://github.com/XuJiandong/serde_molecule",
     favicon: "https://github.com/XuJiandong.png",
     llms: "https://context7.com/XuJiandong/serde_molecule/llms.txt"
+  },
+  {
+    title: "iCKB",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "dApp",
+      "JavaScript/TypeScript",
+      "Rust",
+      "UDT"
+    ],
+    description: "iCKB is a liquid staking protocol and DApp for Nervos CKB, providing a liquid token (iCKB) that represents NervosDAO deposits. Enables fast withdrawals, audited L1 scripts, and a user-friendly web interface.",
+    link: "https://ickb.org/",
+    repo: "https://github.com/ickb/contracts",
+    favicon: "https://github.com/ickb.png",
+    llms: "https://context7.com/ickb/contracts/llms.txt"
+  },
+  {
+    title: "Nerv DAO",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "dApp",
+      "Wallet",
+      "UDT"
+    ],
+    description: "Nerv DAO is a universal wallet-interfaced Nervos DAO portal. Provides a user-friendly interface for CKB holders to deposit, manage, and withdraw from Nervos DAO using various wallets (MetaMask, JoyID, OKX, Unisat, etc). Open source, modern UI, and supports both mainnet and testnet.",
+    link: "https://www.nervdao.com/",
+    repo: "https://github.com/ckb-devrel/nervdao",
+    favicon: "https://github.com/ckb-devrel.png",
+    llms: "https://context7.com/ckb-devrel/nervdao/llms.txt"
   },
 ]
