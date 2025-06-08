@@ -238,7 +238,8 @@ export const AwesomeList = [
       "JavaScript/TypeScript",
       "dApp",
       "Script",
-      "Other Languages",
+      "Lua",
+      "Ruby"
     ],
     description: "This docs is for Nervos Community members. It is outdated and not maintained.",
     link: "https://docs.ckb.dev",
@@ -384,7 +385,6 @@ export const AwesomeList = [
       "Recommended",
       "Rust",
       "Script",
-      "Other Languages",
     ],
     description: "Molecule is a minimalist, canonical serialization system used in Nervos CKB. Provides schema language, code generation, and multi-language support for deterministic data structures.",
     link: "https://github.com/nervosnetwork/molecule",
@@ -402,6 +402,18 @@ export const AwesomeList = [
     link: "https://github.com/nervosnetwork/moleculec-es",
     repo: "https://github.com/nervosnetwork/moleculec-es",
     favicon: "https://github.com/nervosnetwork.png"
+  },
+  {
+    title: "moleculec-go",
+    tag: [
+      "Script",
+      "Go",
+      "Toolchains",
+    ],
+    description: "A plugin for the molecule serialization system to generate Go code from schema files. Enables Go projects to use canonical serialization for CKB and other blockchain applications. MIT licensed.",
+    link: "https://github.com/driftluo/moleculec-go",
+    favicon: "https://github.com/driftluo.png",
+    llms: "https://context7.com/driftluo/moleculec-go/llms.txt"
   },
   {
     title: "ckb-cli",
@@ -685,5 +697,46 @@ export const AwesomeList = [
     link: "https://github.com/tea2x/quantum-purse-web-static",
     favicon: "https://github.com/tea2x.png",
     llms: "https://context7.com/tea2x/quantum-purse-web-static/llms.txt"
+  },
+  {
+    title: "CKB.tools",
+    tag: [
+      "dApp",
+      "JavaScript/TypeScript",
+      "Toolchains",
+    ],
+    description: "CKB.tools is an online collection of free development tools for Nervos CKB, including address conversion, transaction builder, script hash calculator, and more. Open source, web-based, and developer-friendly.",
+    link: "https://ckb.tools/",
+    repo: "https://github.com/jordanmack/ckb-tools",
+    favicon: "https://github.com/jordanmack.png",
+    llms: "https://context7.com/jordanmack/ckb-tools/llms.txt"
+  },
+  {
+    title: "Nervos L1 Developer Training Course",
+    tag: [
+      "Recommended",
+      "Course",
+      "Tutorials",
+      "JavaScript/TypeScript",
+      "Rust",
+    ],
+    description: "Comprehensive hands-on developer training course for Nervos CKB L1. Covers cell model, transactions, scripting, and dApp development with labs and exercises. Open source documentation and community support.",
+    link: "https://nervos.gitbook.io/developer-training-course",
+    repo: "https://github.com/jordanmack/developer-training-course-documentation",
+    favicon: "https://github.com/jordanmack.png",
+    llms: "https://context7.com/jordanmack/developer-training-course-documentation/llms.txt"
+  },
+  {
+    title: "serde_molecule",
+    tag: [
+      "Recommended",
+      "Rust",
+      "Script"
+    ],
+    description: "Implementation of the Molecule serialization format using Serde for Rust. Simplifies serialization/deserialization of CKB data structures, supports no_std, big arrays, and custom types. MIT licensed.",
+    link: "https://docs.rs/serde_molecule/latest/serde_molecule/index.html",
+    repo: "https://github.com/XuJiandong/serde_molecule",
+    favicon: "https://github.com/XuJiandong.png",
+    llms: "https://context7.com/XuJiandong/serde_molecule/llms.txt"
   },
 ]
