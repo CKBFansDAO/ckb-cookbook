@@ -7,7 +7,14 @@ export default async function handler(req, res) {
     return;
   }
   const titleArr = titles.split(",").map(decodeURIComponent);
-  const items = AwesomeList.filter(item => titleArr.includes(item.title));
+  const flatList = [];
+  AwesomeList.forEach(item => {
+    flatList.push(item);
+    if (item.children && Array.isArray(item.children)) {
+      item.children.forEach(child => flatList.push(child));
+    }
+  });
+  const items = flatList.filter(item => titleArr.includes(item.title));
   const texts = await Promise.all(
     items.map(async item => {
       try {

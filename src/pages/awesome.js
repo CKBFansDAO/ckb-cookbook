@@ -252,6 +252,24 @@ function DeepwikiBadge({ githubUrl }) {
   );
 }
 
+// Helper to flatten filtered list into all visible selectable items (parents and children)
+function getAllVisibleSelectableTitlesFlat(filtered) {
+  const titles = [];
+  filtered.forEach(item => {
+    const isOutdated = item.tag && item.tag.includes('Outdated');
+    const itemEnabled = (item.repo || (item.link && item.link.startsWith('https://github.com/')));
+    if (itemEnabled && !isOutdated) titles.push(item.title);
+    if (item.children && Array.isArray(item.children)) {
+      item.children.forEach(child => {
+        const childIsOutdated = child.tag && child.tag.includes('Outdated');
+        const childEnabled = (child.repo || (child.link && child.link.startsWith('https://github.com/')));
+        if (childEnabled && !childIsOutdated) titles.push(child.title);
+      });
+    }
+  });
+  return titles;
+}
+
 export default function AwesomePage() {
   const [selectedTags, setSelectedTags] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -287,8 +305,9 @@ export default function AwesomePage() {
     ...filtered.filter(item => item.tag.includes('Outdated'))
   ];
 
-  const allFilteredTitles = filtered.map(item => item.title);
-  const allChecked = allFilteredTitles.length > 0 && allFilteredTitles.every(title => checked.includes(title));
+  // Use helper to get all visible selectable titles (flat)
+  const allVisibleTitlesFlat = getAllVisibleSelectableTitlesFlat(filtered);
+  const allChecked = allVisibleTitlesFlat.length > 0 && allVisibleTitlesFlat.every(title => checked.includes(title));
 
   const handleCheck = (title) => {
     setChecked(prev =>
@@ -314,20 +333,8 @@ export default function AwesomePage() {
   };
 
   const handleCheckAll = (e) => {
-    // Collect all visible titles, including children, but exclude 'Outdated' items
-    const allTitles = [];
-    filtered.forEach(item => {
-      const isOutdated = item.tag && item.tag.includes('Outdated');
-      const itemEnabled = (item.repo || (item.link && item.link.startsWith('https://github.com/')));
-      if (itemEnabled && !isOutdated) allTitles.push(item.title);
-      if (item.children && Array.isArray(item.children)) {
-        item.children.forEach(child => {
-          const childIsOutdated = child.tag && child.tag.includes('Outdated');
-          const childEnabled = (child.repo || (child.link && child.link.startsWith('https://github.com/')));
-          if (childEnabled && !childIsOutdated) allTitles.push(child.title);
-        });
-      }
-    });
+    // Use helper to get all visible selectable titles (flat)
+    const allTitles = getAllVisibleSelectableTitlesFlat(filtered);
     if (e.target.checked) {
       setChecked(prev => Array.from(new Set([...prev, ...allTitles])));
     } else {
