@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "@docusaurus/router";
 import Layout from "@theme/Layout";
 import { AwesomeList } from "../../data/awesome-list";
@@ -542,6 +542,7 @@ export default function AwesomePage() {
   const [aggPreview, setAggPreview] = useState("");
   const [aggLoading, setAggLoading] = useState(false);
   const [includeIssues, setIncludeIssues] = useState(false);
+  const checkAllRef = useRef();
 
   // Only show items that include all selected tags
   let filtered =
@@ -603,6 +604,13 @@ export default function AwesomePage() {
       setChecked((prev) => prev.filter((title) => !allTitles.includes(title)));
     }
   };
+
+  // Fix indeterminate warning for select-all checkbox
+  useEffect(() => {
+    if (checkAllRef.current) {
+      checkAllRef.current.indeterminate = checked.length > 0 && !allChecked;
+    }
+  }, [checked.length, allChecked]);
 
   // Fetch aggregation preview when checked or includeIssues changes
   React.useEffect(() => {
@@ -767,10 +775,10 @@ export default function AwesomePage() {
             <tr>
               <th style={{ width: 36, borderBottom: "1px solid #ccc" }}>
                 <input
+                  ref={checkAllRef}
                   type="checkbox"
                   checked={allChecked}
                   onChange={handleCheckAll}
-                  indeterminate={checked.length > 0 && !allChecked}
                   title="Check all filtered"
                 />
               </th>
