@@ -15,7 +15,9 @@ export default function Llms() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
     const titles = parseTitlesFromQuery(location.search);
+    const includeIssues = params.get('includeIssues') === 'true';
     if (titles.length > 0) {
       (async () => {
         setLoading(true);
@@ -23,7 +25,8 @@ export default function Llms() {
         setDone(false);
         try {
           const param = encodeURIComponent(titles.join(","));
-          const res = await fetch(`/api/llms-aggregate?titles=${param}`);
+          const url = `/api/llms-aggregate?titles=${param}&includeIssues=${includeIssues ? "true" : "false"}`;
+          const res = await fetch(url);
           const text = await res.text();
           setResult(text);
         } catch {
