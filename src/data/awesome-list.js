@@ -501,7 +501,33 @@ export const AwesomeList = [
     description: "Official Nervos CKB blockchain explorer. Search and visualize blocks, transactions, addresses, and on-chain data. Built with React and Ruby on Rails, open source, and production-ready.",
     link: "https://github.com/nervosnetwork/ckb-explorer",
     favicon: "https://github.com/nervosnetwork.png",
-    llms: "https://context7.com/nervosnetwork/ckb-explorer/llms.txt"
+    llms: "https://context7.com/nervosnetwork/ckb-explorer/llms.txt",
+    children: [
+      {
+        title: "CKB Explorer API Reference (v1)",
+        tag: [
+          "Recommended",
+          "API Reference",
+          "Infrastructure",
+          "JavaScript/TypeScript"
+        ],
+        description: "Official CKB Explorer REST API v1 OpenAPI specification. Provides endpoints for querying blocks, transactions, addresses, SUDTs, NFTs, statistics, and more. Widely used for dApp and service integration.",
+        link: "https://ckb-explorer.readme.io/openapi/64c3a08be5d2e500127a91cc",
+        favicon: "https://github.com/nervosnetwork.png"
+      },
+      {
+        title: "CKB Explorer API Reference (v2)",
+        tag: [
+          "Recommended",
+          "API Reference",
+          "Infrastructure",
+          "JavaScript/TypeScript"
+        ],
+        description: "CKB Explorer REST API v2 OpenAPI specification. Introduces a new structure and some new endpoints, aiming for improved developer experience and future expansion. Note: Full documentation for v2 is not yet available; v1 remains the primary reference for most integrations.",
+        link: "https://ckb-explorer.readme.io/openapi/64c4d30d5e5cc1000a385424",
+        favicon: "https://github.com/nervosnetwork.png"
+      },
+    ]
   },
   {
     title: "ckb-standalone-debugger",
