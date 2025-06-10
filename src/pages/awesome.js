@@ -130,9 +130,10 @@ function Context7Icon() {
   );
 }
 
-function LLMsActions({ llms, title }) {
+function LLMsActions({ llms, title, repo }) {
   const [copyStatus, setCopyStatus] = useState("");
   const [copyLinkStatus, setCopyLinkStatus] = useState("");
+  const [context7Status, setContext7Status] = useState("checking"); // 'checking', 'not-indexed', or null
 
   // Helper to get context7 page for the llms URL
   const getContext7Url = (llmsUrl) => {
@@ -157,6 +158,31 @@ function LLMsActions({ llms, title }) {
     return `https://context7.com/?url=${encodeURIComponent(baseUrl)}`;
   };
   const context7Url = getContext7Url(llms);
+
+  // Only check if not indexed via llms.txt
+  React.useEffect(() => {
+    async function checkContext7Status() {
+      if (!llms || !llms.startsWith('https://context7.com/')) {
+        setContext7Status(null);
+        return;
+      }
+      try {
+        const llmsProxyUrl = "https://cors-proxy-inky-six.vercel.app/api/proxy?url=" + encodeURIComponent(llms);
+        const llmsResp = await fetch(llmsProxyUrl);
+        const llmsTxt = await llmsResp.text();
+        if (llmsTxt.includes('not found. You can add it')) {
+          setContext7Status('not-indexed');
+          return;
+        }
+        setContext7Status(null);
+      } catch (err) {
+        console.log('[Context7 Error] llms.txt fetch failed', err);
+        setContext7Status(null);
+      }
+    }
+    checkContext7Status();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [llms, repo]);
 
   // Copy may fail if the clipboard API is denied by the user, or if fetch fails (e.g., network error or CORS)
   const handleCopyContent = async () => {
@@ -192,12 +218,24 @@ function LLMsActions({ llms, title }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 80, maxWidth: 140, width: '100%' }}>
-      <a href={context7Url} target="_blank" rel="noopener noreferrer" title="Open in Context7" style={{ width: '100%' }}>
-        <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-          <Context7Icon />
-          <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>Context7</span>
-        </button>
-      </a>
+      {/* Show Context7/Index button depending on status */}
+      {context7Status === 'not-indexed' ? (
+        <a href="https://context7.com/add-library" target="_blank" rel="noopener noreferrer" title="Add to Context7" style={{ width: '100%' }}>
+          <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, background: '#2196f3', color: '#fff', fontWeight: 700 }}>
+            <Context7Icon />
+            <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>Index</span>
+          </button>
+        </a>
+      ) : (
+        llms && llms.startsWith('https://context7.com/') && (
+          <a href={context7Url} target="_blank" rel="noopener noreferrer" title="Open in Context7" style={{ width: '100%' }}>
+            <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+              <Context7Icon />
+              <span style={{ display: 'inline-block', minWidth: 48, textAlign: 'left' }}>Context7</span>
+            </button>
+          </a>
+        )
+      )}
       <a href={llms} target="_blank" rel="noopener noreferrer" title="Open LLMs plain text" style={{ width: '100%' }}>
         <button type="button" style={{ padding: '2px 8px', width: '100%', minWidth: 100, maxWidth: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
           <RawIcon />
@@ -560,7 +598,7 @@ export default function AwesomePage() {
                   </td>
                   <td style={{ width: 100 }}>
                     {(item.repo || (item.link && item.link.startsWith('https://github.com/')))
-                      ? <LLMsActions llms={item.llms} title={item.title} />
+                      ? <LLMsActions llms={item.llms} title={item.title} repo={item.repo || (item.link && item.link.startsWith('https://github.com/') ? item.link : undefined)} />
                       : null}
                   </td>
                 </tr>
@@ -682,7 +720,7 @@ export default function AwesomePage() {
                     </td>
                     <td style={{ width: 100 }}>
                       {(child.repo || (child.link && child.link.startsWith('https://github.com/')))
-                        ? <LLMsActions llms={child.llms} title={child.title} />
+                        ? <LLMsActions llms={child.llms} title={child.title} repo={child.repo || (child.link && child.link.startsWith('https://github.com/') ? child.link : undefined)} />
                         : null}
                     </td>
                   </tr>
