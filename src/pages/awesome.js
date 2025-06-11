@@ -326,7 +326,7 @@ function LLMsActions({ llms, title, repo }) {
       {/* Show Context7/Index button depending on status */}
       {context7Status === "not-indexed" ? (
         <a
-          href="https://context7.com/add-library"
+          href={llms ? llms.replace(/\/llms\.txt$/, '') : ''}
           target="_blank"
           rel="noopener noreferrer"
           title="Add to Context7"
