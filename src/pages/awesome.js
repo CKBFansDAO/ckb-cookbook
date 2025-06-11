@@ -670,6 +670,34 @@ export default function AwesomePage() {
     }
   };
 
+  // Preset aggregation copy handlers
+  const [copyPresetStatus, setCopyPresetStatus] = useState("");
+  const [copyPresetStatus2, setCopyPresetStatus2] = useState("");
+  const handleCopyPresetAll = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        window.location.origin + `/llms?preset=all&includeIssues=${includeIssues ? "true" : "false"}`
+      );
+      setCopyPresetStatus("Copied!");
+      setTimeout(() => setCopyPresetStatus(""), 1200);
+    } catch {
+      setCopyPresetStatus("Failed");
+      setTimeout(() => setCopyPresetStatus(""), 1200);
+    }
+  };
+  const handleCopyPresetRecommended = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        window.location.origin + `/llms?preset=recommended&includeIssues=${includeIssues ? "true" : "false"}`
+      );
+      setCopyPresetStatus2("Copied!");
+      setTimeout(() => setCopyPresetStatus2(""), 1200);
+    } catch {
+      setCopyPresetStatus2("Failed");
+      setTimeout(() => setCopyPresetStatus2(""), 1200);
+    }
+  };
+
   return (
     <Layout
       title="Awesome Nervos CKB Ecosystem"
@@ -768,6 +796,16 @@ export default function AwesomePage() {
                 <span>Include Issues for LLMs Context (Might take longer time if many repos are selected)</span>
               </label>
             </div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
+            <button onClick={handleCopyPresetAll}>
+              Copy Aggregate All (No Outdated) Preset Link
+            </button>
+            {copyPresetStatus && <span>{copyPresetStatus}</span>}
+            <button onClick={handleCopyPresetRecommended}>
+              Copy Aggregate Recommended Only Preset Link
+            </button>
+            {copyPresetStatus2 && <span>{copyPresetStatus2}</span>}
           </div>
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>

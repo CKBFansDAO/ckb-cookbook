@@ -160,15 +160,46 @@ function formatIssueAsLLMsEntryGraphQL(issue, owner, repo) {
   return content;
 }
 
+function getPresetTitles(preset) {
+  if (preset === 'all') {
+    // All items except 'Outdated'
+    const allTitles = [];
+    AwesomeList.forEach((item) => {
+      if (!item.tag.includes("Outdated")) allTitles.push(item.title);
+      if (item.children && Array.isArray(item.children)) {
+        item.children.forEach((child) => {
+          if (!child.tag || !child.tag.includes("Outdated")) allTitles.push(child.title);
+        });
+      }
+    });
+    return allTitles;
+  } else if (preset === 'recommended') {
+    // Only 'Recommended' items
+    const recommendedTitles = [];
+    AwesomeList.forEach((item) => {
+      if (item.tag.includes("Recommended")) recommendedTitles.push(item.title);
+      if (item.children && Array.isArray(item.children)) {
+        item.children.forEach((child) => {
+          if (child.tag && child.tag.includes("Recommended")) recommendedTitles.push(child.title);
+        });
+      }
+    });
+    return recommendedTitles;
+  }
+  return [];
+}
+
 export default async function handler(req, res) {
-  console.log("entered llms-aggregate");
-  console.log("req.query", req.query);
-  const { titles, includeIssues } = req.query;
-  if (!titles) {
-    res.status(400).send("Missing titles param");
+  const { titles, includeIssues, preset } = req.query;
+  let titleArr = [];
+  if (preset) {
+    titleArr = getPresetTitles(preset);
+  } else if (titles) {
+    titleArr = titles.split(",").map(decodeURIComponent);
+  } else {
+    res.status(400).send("Missing titles or preset param");
     return;
   }
-  const titleArr = titles.split(",").map(decodeURIComponent);
   const flatList = [];
   AwesomeList.forEach(item => {
     flatList.push(item);

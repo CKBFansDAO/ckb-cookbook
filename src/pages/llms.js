@@ -1,11 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from '@docusaurus/router';
+import { AwesomeList } from "../../data/awesome-list";
 
 function parseTitlesFromQuery(search) {
   const params = new URLSearchParams(search);
   const titles = params.get('titles');
   if (!titles) return [];
   return titles.split(',').map(decodeURIComponent);
+}
+
+function getPresetTitles(preset) {
+  if (preset === 'all') {
+    // All items except 'Outdated'
+    const allTitles = [];
+    AwesomeList.forEach((item) => {
+      if (!item.tag.includes("Outdated")) allTitles.push(item.title);
+      if (item.children && Array.isArray(item.children)) {
+        item.children.forEach((child) => {
+          if (!child.tag || !child.tag.includes("Outdated")) allTitles.push(child.title);
+        });
+      }
+    });
+    return allTitles;
+  } else if (preset === 'recommended') {
+    // Only 'Recommended' items
+    const recommendedTitles = [];
+    AwesomeList.forEach((item) => {
+      if (item.tag.includes("Recommended")) recommendedTitles.push(item.title);
+      if (item.children && Array.isArray(item.children)) {
+        item.children.forEach((child) => {
+          if (child.tag && child.tag.includes("Recommended")) recommendedTitles.push(child.title);
+        });
+      }
+    });
+    return recommendedTitles;
+  }
+  return [];
 }
 
 export default function Llms() {
@@ -16,7 +46,13 @@ export default function Llms() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const titles = parseTitlesFromQuery(location.search);
+    const preset = params.get('preset');
+    let titles = [];
+    if (preset) {
+      titles = getPresetTitles(preset);
+    } else {
+      titles = parseTitlesFromQuery(location.search);
+    }
     const includeIssues = params.get('includeIssues') === 'true';
     if (titles.length > 0) {
       (async () => {
