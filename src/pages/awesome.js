@@ -13,6 +13,9 @@ function getAllTags(list) {
         t !== "Outdated" &&
         t !== "dApp" &&
         t !== "Script" &&
+        t !== "Example Project" &&
+        t !== "JavaScript/TypeScript" &&
+        t !== "Rust" &&
         t !== "Non-Technical" &&
         t !== "中文（Chinese）" &&
         t !== "Social Media"
@@ -22,6 +25,9 @@ function getAllTags(list) {
     "Recommended",
     "dApp",
     "Script",
+    "Example Project",
+    "JavaScript/TypeScript",
+    "Rust",
     "Non-Technical",
     "中文（Chinese）",
     "Social Media",

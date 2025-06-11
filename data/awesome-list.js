@@ -285,7 +285,7 @@ export const AwesomeList = [
     title: "Nervos Talk 中文社区",
     tag: [
       "Recommended",
-      "Forum",
+      "Social Media",
       "中文（Chinese）",
       "Non-Technical"
     ],
@@ -297,7 +297,7 @@ export const AwesomeList = [
     title: "Nervos Talk",
     tag: [
       "Recommended",
-      "Forum",
+      "Social Media",
       "Non-Technical"
     ],
     description: "Nervos Talk: The forum for CKB and Nervos community discussions, news, and technical Q&A.",
@@ -704,12 +704,8 @@ export const AwesomeList = [
     tag: [
       "Recommended",
       "JavaScript/TypeScript",
-      "SDK",
       "dApp",
-      "CKB",
-      "Swap",
       "DeFi",
-      "Open Source"
     ],
     description: "UTXO Swap SDK for Nervos CKB. Provides APIs and utilities for building swap dApps, querying pools, calculating outputs, and integrating with CKB and swap backend. Includes React example and supports custom signing.",
     link: "https://github.com/UTXOSwap/utxoswap-sdk-js",
@@ -720,13 +716,10 @@ export const AwesomeList = [
     title: "ckb-autotrader",
     tag: [
       "Recommended",
-      "TypeScript",
-      "Backend",
-      "Bot",
-      "CKB",
-      "Swap",
       "DeFi",
-      "Open Source"
+      "JavaScript/TypeScript",
+      "dApp",
+      "Example Project",
     ],
     description: "Generic scaffold and exemplary project for building backend and bot services for CKB projects. Modular, extensible, and demonstrates best practices for CKB-related services, including balance checking, UTXOSwap pool checking, and token redistribution.",
     link: "https://github.com/Alive24/ckb-autotrader",
