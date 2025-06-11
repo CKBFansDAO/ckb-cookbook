@@ -356,6 +356,8 @@ export const AwesomeList = [
     ],
     description: "CKB Dapps: A curated directory of dApps and ecosystem projects built on Nervos CKB.",
     link: "https://ckbdapps.com/",
+    repo: "https://github.com/CKBFansDAO/ckbdapps",
+    llms: "https://context7.com/CKBFansDAO/ckbdapps/llms.txt",
     favicon: "https://ckbdapps.com/favicon.ico"
   },
   {
@@ -368,6 +370,8 @@ export const AwesomeList = [
     ],
     description: "Fiber Network: A scalable, privacy-by-default payment and swap network for CKB/RGB++, supporting multi-asset, cross-chain, and Lightning interoperability.",
     link: "https://www.fiber.world/",
+    repo: "https://github.com/nervosnetwork/fiber",
+    llms: "https://context7.com/nervosnetwork/fiber/llms.txt",
     favicon: "https://www.fiber.world/favicon.svg"
   },
   {
@@ -512,7 +516,8 @@ export const AwesomeList = [
           "JavaScript/TypeScript"
         ],
         description: "Official CKB Explorer REST API v1 OpenAPI specification. Provides endpoints for querying blocks, transactions, addresses, SUDTs, NFTs, statistics, and more. Widely used for dApp and service integration.",
-        link: "https://ckb-explorer.readme.io/openapi/64c3a08be5d2e500127a91cc",
+        link: "https://ckb-explorer.readme.io/reference/intro/my-requests",
+        llms: "https://ckb-explorer.readme.io/openapi/64c3a08be5d2e500127a91cc",
         favicon: "https://github.com/nervosnetwork.png"
       },
       {
@@ -525,6 +530,7 @@ export const AwesomeList = [
         ],
         description: "CKB Explorer REST API v2 OpenAPI specification. Introduces a new structure and some new endpoints, aiming for improved developer experience and future expansion. Note: Full documentation for v2 is not yet available; v1 remains the primary reference for most integrations.",
         link: "https://ckb-explorer.readme.io/openapi/64c4d30d5e5cc1000a385424",
+        llms: "https://ckb-explorer.readme.io/openapi/64c4d30d5e5cc1000a385424",
         favicon: "https://github.com/nervosnetwork.png"
       },
     ]
@@ -548,6 +554,7 @@ export const AwesomeList = [
     ],
     description: "Bitcoin SPV client implementation as CKB contracts. Enables Bitcoin proof verification on CKB. Includes audit report.",
     link: "https://github.com/utxostack/ckb-bitcoin-spv-contracts",
+    llms: "https://context7.com/utxostack/ckb-bitcoin-spv-contracts/llms.txt",
     favicon: "https://github.com/utxostack.png",
   },
   {

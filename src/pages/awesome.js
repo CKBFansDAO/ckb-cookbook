@@ -305,19 +305,6 @@ function LLMsActions({ llms, title, repo }) {
     }
   };
 
-  const handleCopyApiRawLink = async () => {
-    if (!title) return;
-    try {
-      const apiUrl = `/api/llms-aggregate?titles=${encodeURIComponent(title)}`;
-      await navigator.clipboard.writeText(window.location.origin + apiUrl);
-      setCopyLinkStatus("Copied!");
-      setTimeout(() => setCopyLinkStatus(""), 1200);
-    } catch {
-      setCopyLinkStatus("Failed");
-      setTimeout(() => setCopyLinkStatus(""), 1200);
-    }
-  };
-
   return (
     <div
       style={{
@@ -492,25 +479,6 @@ function LLMsActions({ llms, title, repo }) {
           style={{ display: "inline-block", minWidth: 48, textAlign: "left" }}
         >
           {copyLinkStatus ? copyLinkStatus : "Link"}
-        </span>
-      </button>
-      <button
-        type="button"
-        style={{
-          padding: "2px 8px",
-          width: "100%",
-          minWidth: 100,
-          maxWidth: 100,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 4,
-        }}
-        onClick={handleCopyApiRawLink}
-        title="Copy API raw llms.txt link for this item"
-      >
-        <span style={{ display: "inline-block", minWidth: 48, textAlign: "left" }}>
-          API Raw
         </span>
       </button>
     </div>
@@ -1139,16 +1107,13 @@ export default function AwesomePage() {
                     ))}
                   </td>
                   <td style={{ width: 100 }}>
-                    {item.repo ||
-                    (item.link &&
-                      item.link.startsWith("https://github.com/")) ? (
+                    {item.llms ? (
                       <LLMsActions
                         llms={item.llms}
                         title={item.title}
                         repo={
                           item.repo ||
-                          (item.link &&
-                          item.link.startsWith("https://github.com/")
+                          (item.link && item.link.startsWith("https://github.com/")
                             ? item.link
                             : undefined)
                         }
@@ -1433,16 +1398,13 @@ export default function AwesomePage() {
                         ))}
                       </td>
                       <td style={{ width: 100 }}>
-                        {child.repo ||
-                        (child.link &&
-                          child.link.startsWith("https://github.com/")) ? (
+                        {child.llms ? (
                           <LLMsActions
                             llms={child.llms}
                             title={child.title}
                             repo={
                               child.repo ||
-                              (child.link &&
-                              child.link.startsWith("https://github.com/")
+                              (child.link && child.link.startsWith("https://github.com/")
                                 ? child.link
                                 : undefined)
                             }
