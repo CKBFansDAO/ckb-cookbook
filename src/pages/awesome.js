@@ -299,6 +299,19 @@ function LLMsActions({ llms, title, repo }) {
     }
   };
 
+  const handleCopyApiRawLink = async () => {
+    if (!title) return;
+    try {
+      const apiUrl = `/api/llms-aggregate?titles=${encodeURIComponent(title)}`;
+      await navigator.clipboard.writeText(window.location.origin + apiUrl);
+      setCopyLinkStatus("Copied!");
+      setTimeout(() => setCopyLinkStatus(""), 1200);
+    } catch {
+      setCopyLinkStatus("Failed");
+      setTimeout(() => setCopyLinkStatus(""), 1200);
+    }
+  };
+
   return (
     <div
       style={{
@@ -475,6 +488,25 @@ function LLMsActions({ llms, title, repo }) {
           {copyLinkStatus ? copyLinkStatus : "Link"}
         </span>
       </button>
+      <button
+        type="button"
+        style={{
+          padding: "2px 8px",
+          width: "100%",
+          minWidth: 100,
+          maxWidth: 100,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 4,
+        }}
+        onClick={handleCopyApiRawLink}
+        title="Copy API raw llms.txt link for this item"
+      >
+        <span style={{ display: "inline-block", minWidth: 48, textAlign: "left" }}>
+          API Raw
+        </span>
+      </button>
     </div>
   );
 }
@@ -585,11 +617,6 @@ export default function AwesomePage() {
     );
   };
 
-  // Add aggregateUrl with includeIssues param
-  const aggregateUrl = `/llms?titles=${encodeURIComponent(
-    checked.join(",")
-  )}&includeIssues=${includeIssues ? "true" : "false"}`;
-
   const toggleTag = (tag) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
@@ -656,12 +683,11 @@ export default function AwesomePage() {
     }
   };
 
-  // Add a copy link button if needed
-  const handleCopyAggregateLink = async () => {
+  // Add the handler for copying the API link
+  const handleCopyAggregateApiLink = async () => {
     try {
-      await navigator.clipboard.writeText(
-        window.location.origin + aggregateUrl
-      );
+      const apiUrl = `/api/llms-aggregate?titles=${encodeURIComponent(checked.join(","))}&includeIssues=${includeIssues ? "true" : "false"}`;
+      await navigator.clipboard.writeText(window.location.origin + apiUrl);
       setCopyAggStatus("Copied!");
       setTimeout(() => setCopyAggStatus(""), 1200);
     } catch {
@@ -676,7 +702,7 @@ export default function AwesomePage() {
   const handleCopyPresetAll = async () => {
     try {
       await navigator.clipboard.writeText(
-        window.location.origin + `/llms?preset=all&includeIssues=${includeIssues ? "true" : "false"}`
+        window.location.origin + `/api/llms-aggregate?preset=all&includeIssues=${includeIssues ? "true" : "false"}`
       );
       setCopyPresetStatus("Copied!");
       setTimeout(() => setCopyPresetStatus(""), 1200);
@@ -688,7 +714,7 @@ export default function AwesomePage() {
   const handleCopyPresetRecommended = async () => {
     try {
       await navigator.clipboard.writeText(
-        window.location.origin + `/llms?preset=recommended&includeIssues=${includeIssues ? "true" : "false"}`
+        window.location.origin + `/api/llms-aggregate?preset=recommended&includeIssues=${includeIssues ? "true" : "false"}`
       );
       setCopyPresetStatus2("Copied!");
       setTimeout(() => setCopyPresetStatus2(""), 1200);
@@ -1434,7 +1460,7 @@ export default function AwesomePage() {
             }}
           >
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <button onClick={handleCopyAggregateLink}>
+              <button onClick={handleCopyAggregateApiLink}>
                 Copy aggregate link ({checked.length})
               </button>
               <button onClick={handleDownloadAggregated}>
