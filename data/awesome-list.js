@@ -238,7 +238,8 @@ export const AwesomeList = [
       "JavaScript/TypeScript",
       "dApp",
       "Script",
-      "Other Languages",
+      "Lua",
+      "Ruby"
     ],
     description: "This docs is for Nervos Community members. It is outdated and not maintained.",
     link: "https://docs.ckb.dev",
@@ -284,7 +285,7 @@ export const AwesomeList = [
     title: "Nervos Talk 中文社区",
     tag: [
       "Recommended",
-      "Forum",
+      "Social Media",
       "中文（Chinese）",
       "Non-Technical"
     ],
@@ -296,7 +297,7 @@ export const AwesomeList = [
     title: "Nervos Talk",
     tag: [
       "Recommended",
-      "Forum",
+      "Social Media",
       "Non-Technical"
     ],
     description: "Nervos Talk: The forum for CKB and Nervos community discussions, news, and technical Q&A.",
@@ -355,6 +356,8 @@ export const AwesomeList = [
     ],
     description: "CKB Dapps: A curated directory of dApps and ecosystem projects built on Nervos CKB.",
     link: "https://ckbdapps.com/",
+    repo: "https://github.com/CKBFansDAO/ckbdapps",
+    llms: "https://context7.com/CKBFansDAO/ckbdapps/llms.txt",
     favicon: "https://ckbdapps.com/favicon.ico"
   },
   {
@@ -367,6 +370,8 @@ export const AwesomeList = [
     ],
     description: "Fiber Network: A scalable, privacy-by-default payment and swap network for CKB/RGB++, supporting multi-asset, cross-chain, and Lightning interoperability.",
     link: "https://www.fiber.world/",
+    repo: "https://github.com/nervosnetwork/fiber",
+    llms: "https://context7.com/nervosnetwork/fiber/llms.txt",
     favicon: "https://www.fiber.world/favicon.svg"
   },
   {
@@ -384,7 +389,6 @@ export const AwesomeList = [
       "Recommended",
       "Rust",
       "Script",
-      "Other Languages",
     ],
     description: "Molecule is a minimalist, canonical serialization system used in Nervos CKB. Provides schema language, code generation, and multi-language support for deterministic data structures.",
     link: "https://github.com/nervosnetwork/molecule",
@@ -402,6 +406,18 @@ export const AwesomeList = [
     link: "https://github.com/nervosnetwork/moleculec-es",
     repo: "https://github.com/nervosnetwork/moleculec-es",
     favicon: "https://github.com/nervosnetwork.png"
+  },
+  {
+    title: "moleculec-go",
+    tag: [
+      "Script",
+      "Go",
+      "Toolchains",
+    ],
+    description: "A plugin for the molecule serialization system to generate Go code from schema files. Enables Go projects to use canonical serialization for CKB and other blockchain applications. MIT licensed.",
+    link: "https://github.com/driftluo/moleculec-go",
+    favicon: "https://github.com/driftluo.png",
+    llms: "https://context7.com/driftluo/moleculec-go/llms.txt"
   },
   {
     title: "ckb-cli",
@@ -489,7 +505,35 @@ export const AwesomeList = [
     description: "Official Nervos CKB blockchain explorer. Search and visualize blocks, transactions, addresses, and on-chain data. Built with React and Ruby on Rails, open source, and production-ready.",
     link: "https://github.com/nervosnetwork/ckb-explorer",
     favicon: "https://github.com/nervosnetwork.png",
-    llms: "https://context7.com/nervosnetwork/ckb-explorer/llms.txt"
+    llms: "https://context7.com/nervosnetwork/ckb-explorer/llms.txt",
+    children: [
+      {
+        title: "CKB Explorer API Reference (v1)",
+        tag: [
+          "Recommended",
+          "API Reference",
+          "Infrastructure",
+          "JavaScript/TypeScript"
+        ],
+        description: "Official CKB Explorer REST API v1 OpenAPI specification. Provides endpoints for querying blocks, transactions, addresses, SUDTs, NFTs, statistics, and more. Widely used for dApp and service integration.",
+        link: "https://ckb-explorer.readme.io/reference/intro/my-requests",
+        llms: "https://ckb-explorer.readme.io/openapi/64c3a08be5d2e500127a91cc",
+        favicon: "https://github.com/nervosnetwork.png"
+      },
+      {
+        title: "CKB Explorer API Reference (v2)",
+        tag: [
+          "Recommended",
+          "API Reference",
+          "Infrastructure",
+          "JavaScript/TypeScript"
+        ],
+        description: "CKB Explorer REST API v2 OpenAPI specification. Introduces a new structure and some new endpoints, aiming for improved developer experience and future expansion. Note: Full documentation for v2 is not yet available; v1 remains the primary reference for most integrations.",
+        link: "https://ckb-explorer.readme.io/openapi/64c4d30d5e5cc1000a385424",
+        llms: "https://ckb-explorer.readme.io/openapi/64c4d30d5e5cc1000a385424",
+        favicon: "https://github.com/nervosnetwork.png"
+      },
+    ]
   },
   {
     title: "ckb-standalone-debugger",
@@ -510,6 +554,7 @@ export const AwesomeList = [
     ],
     description: "Bitcoin SPV client implementation as CKB contracts. Enables Bitcoin proof verification on CKB. Includes audit report.",
     link: "https://github.com/utxostack/ckb-bitcoin-spv-contracts",
+    llms: "https://context7.com/utxostack/ckb-bitcoin-spv-contracts/llms.txt",
     favicon: "https://github.com/utxostack.png",
   },
   {
@@ -667,11 +712,26 @@ export const AwesomeList = [
       "Recommended",
       "JavaScript/TypeScript",
       "dApp",
+      "DeFi",
     ],
     description: "UTXO Swap SDK for Nervos CKB. Provides APIs and utilities for building swap dApps, querying pools, calculating outputs, and integrating with CKB and swap backend. Includes React example and supports custom signing.",
     link: "https://github.com/UTXOSwap/utxoswap-sdk-js",
     favicon: "https://github.com/UTXOSwap.png",
     llms: "https://context7.com/UTXOSwap/utxoswap-sdk-js/llms.txt"
+  },
+  {
+    title: "ckb-autotrader",
+    tag: [
+      "Recommended",
+      "DeFi",
+      "JavaScript/TypeScript",
+      "dApp",
+      "Example Project",
+    ],
+    description: "Generic scaffold and exemplary project for building backend and bot services for CKB projects. Modular, extensible, and demonstrates best practices for CKB-related services, including balance checking, UTXOSwap pool checking, and token redistribution.",
+    link: "https://github.com/Alive24/ckb-autotrader",
+    favicon: "https://github.com/Alive24.png",
+    llms: "https://context7.com/Alive24/ckb-autotrader/llms.txt"
   },
   {
     title: "quantum-purse-web-static",
@@ -685,5 +745,77 @@ export const AwesomeList = [
     link: "https://github.com/tea2x/quantum-purse-web-static",
     favicon: "https://github.com/tea2x.png",
     llms: "https://context7.com/tea2x/quantum-purse-web-static/llms.txt"
+  },
+  {
+    title: "CKB.tools",
+    tag: [
+      "dApp",
+      "JavaScript/TypeScript",
+      "Toolchains",
+    ],
+    description: "CKB.tools is an online collection of free development tools for Nervos CKB, including address conversion, transaction builder, script hash calculator, and more. Open source, web-based, and developer-friendly.",
+    link: "https://ckb.tools/",
+    repo: "https://github.com/jordanmack/ckb-tools",
+    favicon: "https://github.com/jordanmack.png",
+    llms: "https://context7.com/jordanmack/ckb-tools/llms.txt"
+  },
+  {
+    title: "Nervos L1 Developer Training Course",
+    tag: [
+      "Recommended",
+      "Course",
+      "Tutorials",
+      "JavaScript/TypeScript",
+      "Rust",
+    ],
+    description: "Comprehensive hands-on developer training course for Nervos CKB L1. Covers cell model, transactions, scripting, and dApp development with labs and exercises. Open source documentation and community support.",
+    link: "https://nervos.gitbook.io/developer-training-course",
+    repo: "https://github.com/jordanmack/developer-training-course-documentation",
+    favicon: "https://github.com/jordanmack.png",
+    llms: "https://context7.com/jordanmack/developer-training-course-documentation/llms.txt"
+  },
+  {
+    title: "serde_molecule",
+    tag: [
+      "Recommended",
+      "Rust",
+      "Script"
+    ],
+    description: "Implementation of the Molecule serialization format using Serde for Rust. Simplifies serialization/deserialization of CKB data structures, supports no_std, big arrays, and custom types. MIT licensed.",
+    link: "https://docs.rs/serde_molecule/latest/serde_molecule/index.html",
+    repo: "https://github.com/XuJiandong/serde_molecule",
+    favicon: "https://github.com/XuJiandong.png",
+    llms: "https://context7.com/XuJiandong/serde_molecule/llms.txt"
+  },
+  {
+    title: "iCKB",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "dApp",
+      "JavaScript/TypeScript",
+      "Rust",
+      "UDT"
+    ],
+    description: "iCKB is a liquid staking protocol and DApp for Nervos CKB, providing a liquid token (iCKB) that represents NervosDAO deposits. Enables fast withdrawals, audited L1 scripts, and a user-friendly web interface.",
+    link: "https://ickb.org/",
+    repo: "https://github.com/ickb/contracts",
+    favicon: "https://github.com/ickb.png",
+    llms: "https://context7.com/ickb/contracts/llms.txt"
+  },
+  {
+    title: "Nerv DAO",
+    tag: [
+      "Recommended",
+      "Example Project",
+      "dApp",
+      "Wallet",
+      "UDT"
+    ],
+    description: "Nerv DAO is a universal wallet-interfaced Nervos DAO portal. Provides a user-friendly interface for CKB holders to deposit, manage, and withdraw from Nervos DAO using various wallets (MetaMask, JoyID, OKX, Unisat, etc). Open source, modern UI, and supports both mainnet and testnet.",
+    link: "https://www.nervdao.com/",
+    repo: "https://github.com/ckb-devrel/nervdao",
+    favicon: "https://github.com/ckb-devrel.png",
+    llms: "https://context7.com/ckb-devrel/nervdao/llms.txt"
   },
 ]

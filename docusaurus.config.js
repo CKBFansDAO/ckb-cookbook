@@ -5,6 +5,9 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -155,6 +158,9 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
     }),
+  customFields: {
+    githubToken: process.env.GITHUB_TOKEN,
+  },
 };
 
 export default config;
